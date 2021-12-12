@@ -1,0 +1,24 @@
+@import 'colors';
+
+.container {
+    height: 80px;
+    background-color: $header-background;
+    padding: 0 40px 0 40px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    color: white;
+
+    .logo {
+        font-family: 'CorinthiaBold';
+        font-size: x-large;
+    }
+
+    .menus {
+        display: flex;
+
+        div {
+            padding-right: 20px;
+        }
+    }
+}

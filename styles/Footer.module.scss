@@ -1,0 +1,11 @@
+@import 'colors';
+
+.container {
+    display: flex;
+    height: 50px;
+    background-color: $header-background;
+    color: white;
+    align-items: center;
+    font-size: 12px;
+    padding-left: 50px;
+}

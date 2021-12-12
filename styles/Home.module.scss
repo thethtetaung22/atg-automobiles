@@ -1,0 +1,8 @@
+@import 'colors';
+
+.container {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    min-width: 250px;
+}

@@ -1,0 +1,12 @@
+@import 'colors';
+
+.container {
+    display: flex;
+    flex-direction: column;
+    flex: 1 1 auto;
+
+    .body {
+        display: flex;
+        flex: 1;
+    }
+}
