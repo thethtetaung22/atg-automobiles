@@ -7,18 +7,27 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    color: white;
+    z-index: 10;
 
     .logo {
         font-family: 'CorinthiaBold';
-        font-size: x-large;
+        font-size: xx-large;
+        font-weight: 1000;
+        color: #C60021;
     }
 
     .menus {
         display: flex;
 
         div {
-            padding-right: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-right: 20px;
+            padding: 10px 20px;
+            background-color: #C60021;
+            color: white;
+            border-radius: 20px;
         }
     }
 }

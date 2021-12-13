@@ -1,0 +1,120 @@
+.container {
+    display: flex;
+    flex: initial;
+    height: 50vh;
+    position: relative;
+    background-image: url('/main_bg.png');
+    background-size: cover;
+    background-repeat: no-repeat;
+    justify-content: center;
+    align-items: center;
+
+    .bodyBg {
+        display: flex;
+        flex-direction: column;
+        width: 60%;
+        background-color: black;
+        opacity: 0.7;
+        border-radius: 15px;
+        height: 80%;
+    }
+
+    .body {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        position: absolute;
+        margin-top: -20px;
+
+        .title {
+            color: white;
+            font-weight: bold;
+            font-size: 40px;
+        }
+
+        .inputArea {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding-top: 20px;
+
+            .inputContainer {
+                display: flex;
+
+                .input {
+                    display: flex;
+                    flex-wrap: wrap;
+                    width: 300px;
+                    height: 50px;
+                    border-radius: 10px;
+                    background-color: white;
+                    margin: 0 10px;
+                    opacity: 1;
+                    color: black;
+                    font-weight: bold;
+
+                    :focus {
+                        outline: none;
+                        width: 220px;
+                        transition: width 200ms ease-out;
+                    }
+                }
+            }
+
+            .searchButton {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                margin-top: 20px;
+                width: 300px;
+                height: 50px;
+                font-size: 20px;
+                font-weight: 600;
+                background-color: #C60021;
+                color: white;
+                border-radius: 20px;
+                opacity: 1;
+                fill-opacity: 1;
+            }
+            
+        }
+    }
+}
+
+@media screen and (max-width: 1000px) {
+
+    .container {
+        margin-left: -40px;
+        
+        .bodyBg {
+            width: 80%;
+        }
+
+        .body {
+            margin-left: 40px;
+            display: flex;
+            flex-direction: column;
+
+            .inputArea {
+
+                .inputContainer {
+                    flex-direction: column;
+                    
+                    .input {
+                        margin-top: 20px;
+                    }
+                }
+            }
+        }
+    }
+}
+
+@media screen and (max-width: 700px) {
+    .container {
+        height: 50vh;
+
+        .bodyBg {
+            margin-left: 40px;
+        }
+    }
+}
