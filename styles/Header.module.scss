@@ -31,3 +31,12 @@
         }
     }
 }
+
+@media screen and (max-width: 600px) {
+    .container {
+
+        .menus {
+            display: none;
+        }
+    }
+}
