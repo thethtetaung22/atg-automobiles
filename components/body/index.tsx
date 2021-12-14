@@ -1,12 +1,14 @@
 import styles from '../../styles/Body.module.scss';
-import CarList from './CarList';
-import SearchArea from './SearchArea';
+import CarList from './Children/CarList';
+import SearchArea from './Children/SearchArea';
 
 const Body = () => {
     return (
         <div className={styles.container}>
             <SearchArea />
-            <CarList />
+            <div className={styles.carListContainer}>
+                <CarList />
+            </div>
         </div>
     )
 }

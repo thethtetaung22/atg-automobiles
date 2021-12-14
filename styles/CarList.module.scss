@@ -1,0 +1,111 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    width: 95%;
+    justify-content: center;
+    align-items: center;
+    padding-top: 50px;
+
+    .title {
+        font-family: Georgia, 'Times New Roman', Times, serif;
+        font-size: 30px;
+        font-weight: bold;
+    }
+
+    .divider {
+        height: 2px;
+        background-color: red;
+        width: 1000px;
+        margin-top: 10px;
+    }
+
+    .carListContainer {
+        padding-top: 40px;
+        display: grid;
+        grid-template-columns: auto auto auto auto;
+        gap: 10px;
+
+        .carContainer {
+            display: flex;
+            width: 300px;
+            height: 350px;
+            flex-direction: column;
+
+            .previewImage {
+                width: 100%;
+                height: auto;
+            }
+
+            .detailsContainer {
+                display: flex;
+                padding-top: 10px;
+                flex-direction: column;
+
+                .carName {
+                    font-family: Lato;
+                    font-weight: bold;
+                    font-size: 17px;
+                    padding-left: 5px;
+                }
+
+                .fullDetails {
+                    display: flex;
+                    flex-direction: column;
+                    padding-top: 10px;
+                    
+
+                    div {
+                        display: flex;
+                        justify-content: space-between;
+                        padding: 0 20px;
+                        font-family: Lato;
+                        font-weight: 550;
+                        font-size: 14px;
+                        line-height: 25px;
+                    }
+                }
+            }
+        }
+    }
+
+}
+
+@media screen and (max-width: 1200px) {
+    .container {
+
+        .divider {
+            width: 850px;
+        }
+
+        .carListContainer {
+            grid-template-columns: auto auto auto;
+        }
+    }
+}
+
+
+@media screen and (max-width: 950px) {
+    .container {
+
+        .divider {
+            width: 550px;
+        }
+
+        .carListContainer {
+            grid-template-columns: auto auto;
+        }
+    }
+}
+
+@media screen and (max-width: 700px) {
+    .container {
+
+        .divider {
+            width: 250px;
+        }
+
+        .carListContainer {
+            grid-template-columns: auto;
+        }
+    }
+}
