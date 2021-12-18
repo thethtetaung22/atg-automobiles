@@ -21,6 +21,8 @@
 
         div {
             display: flex;
+            width: max-content;
+            height: 40px;
             justify-content: center;
             align-items: center;
             margin-right: 20px;
@@ -30,6 +32,19 @@
             border-radius: 20px;
         }
     }
+
+    .sideNavMenu {
+        display: none;
+        font-size: xx-large;
+    }
+
+    .sideNavContainer {
+        position: absolute;
+        width: 80%;
+        right: 0;
+        height: 100%;
+        z-index: 10;
+    }
 }
 
 @media screen and (max-width: 600px) {
@@ -37,6 +52,10 @@
 
         .menus {
             display: none;
+        }
+
+        .sideNavMenu {
+            display: flex;
         }
     }
 }
