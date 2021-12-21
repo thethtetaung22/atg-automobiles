@@ -4,7 +4,7 @@
     position: sticky;
     height: 80px;
     background-color: $header-background;
-    padding: 0 40px 0 40px;
+    padding: 0 40px;
     display: flex;
     flex: none;
     align-items: center;
@@ -12,10 +12,9 @@
     z-index: 10;
 
     .logo {
-        font-family: 'CorinthiaBold';
-        font-size: xx-large;
-        font-weight: 1000;
-        color: #C60021;
+        padding-top: 10px;
+        width: 150px;
+        height: max-content;
     }
 
     .menus {
@@ -51,7 +50,7 @@
 
 @media screen and (max-width: 600px) {
     .container {
-
+        padding: 0 40px 0 10px;
         .menus {
             display: none;
         }

@@ -1,15 +1,17 @@
-import React, { useState } from 'react';
 import Link from 'next/link';
 import styles from '../../styles/Nav.module.scss';
 import MenuIcon from '@mui/icons-material/Menu';
-import SideNav from '../sidenav';
+import Image from 'next/image';
 
 const NavBar = ({ toggle }: any) => {
-    let [openSideNav, setOpenSideNav] = useState(false);
     return (
         <nav className={styles.container}>
             <div className={styles.logo}>
-                ATG Automobiles
+                <Image
+                    src={'/atglogo.png'}
+                    width={150}
+                    height={110}
+                    />
             </div>
             <div className={styles.menus}>
                 <div className={styles.link}>
