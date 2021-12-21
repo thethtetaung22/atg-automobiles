@@ -1,10 +1,12 @@
 @import 'colors';
 
 .container {
+    position: sticky;
     height: 80px;
     background-color: $header-background;
     padding: 0 40px 0 40px;
     display: flex;
+    flex: none;
     align-items: center;
     justify-content: space-between;
     z-index: 10;
@@ -21,6 +23,8 @@
 
         div {
             display: flex;
+            width: max-content;
+            height: 40px;
             justify-content: center;
             align-items: center;
             margin-right: 20px;
@@ -30,6 +34,19 @@
             border-radius: 20px;
         }
     }
+
+    .sideNavMenu {
+        display: none;
+        font-size: xx-large;
+    }
+
+    .sideNavContainer {
+        position: absolute;
+        width: 80%;
+        right: 0;
+        z-index: 10;
+        background-color: #C60021;
+    }
 }
 
 @media screen and (max-width: 600px) {
@@ -37,6 +54,10 @@
 
         .menus {
             display: none;
+        }
+
+        .sideNavMenu {
+            display: flex;
         }
     }
 }
