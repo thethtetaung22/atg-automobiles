@@ -9,8 +9,8 @@ const NavBar = ({ toggle }: any) => {
             <div className={styles.logo}>
                 <Image
                     src={'/atglogo.png'}
-                    width={150}
-                    height={110}
+                    width={140}
+                    height={100}
                     />
             </div>
             <div className={styles.menus}>
