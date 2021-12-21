@@ -1,15 +1,15 @@
 import type { NextPage } from 'next';
-import Head from 'next/head';
-import Main from '../components/main';
+import CarList from '../components/home/CarList';
+import SearchArea from '../components/home/SearchArea';
 import styles from '../styles/Home.module.scss';
 
 const Home: NextPage = () => {
   return (
     <div className={styles.container}>
-      <Head>
-        <title>ATG Automobiles</title>
-      </Head>
-      <Main />
+        <SearchArea />
+        <div className={styles.carListContainer}>
+            <CarList />
+        </div>
     </div>
   )
 }

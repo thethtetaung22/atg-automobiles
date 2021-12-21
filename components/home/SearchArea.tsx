@@ -1,4 +1,4 @@
-import styles from '../../../styles/SearchArea.module.scss';
+import styles from '../../styles/SearchArea.module.scss';
 import { Button, OutlinedInput } from '@mui/material';
 
 const SearchArea = () => {

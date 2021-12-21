@@ -1,10 +1,12 @@
 @import 'colors';
 
 .container {
+    position: sticky;
     height: 80px;
     background-color: $header-background;
     padding: 0 40px 0 40px;
     display: flex;
+    flex: none;
     align-items: center;
     justify-content: space-between;
     z-index: 10;
@@ -42,8 +44,8 @@
         position: absolute;
         width: 80%;
         right: 0;
-        height: 100%;
         z-index: 10;
+        background-color: #C60021;
     }
 }
 

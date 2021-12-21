@@ -1,8 +1,8 @@
 import { Divider } from "@mui/material";
 import Image from "next/image";
-import { useEffect, useState } from "react";
-import { sampleCarList } from "../../../data/sample";
-import styles from '../../../styles/CarList.module.scss';
+import { useState } from "react";
+import { sampleCarList } from "../../data/sample";
+import styles from '../../styles/CarList.module.scss';
 
 const CarList = () => {
     const [skip, setSkip] = useState(0);

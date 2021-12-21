@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
-import styles from '../../styles/Header.module.scss';
+import styles from '../../styles/Nav.module.scss';
 import MenuIcon from '@mui/icons-material/Menu';
 import SideNav from '../sidenav';
 
-const Header = () => {
-    const [openSideNav, setOpenSideNav] = useState(true);
+const NavBar = ({ toggle }: any) => {
+    let [openSideNav, setOpenSideNav] = useState(false);
     return (
-        <div className={styles.container}>
+        <nav className={styles.container}>
             <div className={styles.logo}>
                 ATG Automobiles
             </div>
@@ -28,18 +28,12 @@ const Header = () => {
                     </Link>
                 </div>
             </div>
-            <div className={styles.sideNavMenu}>
+            <div className={styles.sideNavMenu} onClick={toggle}>
                 <MenuIcon fontSize='large'/>
             </div>
-
-            <div style={{display: openSideNav? 'flex': 'none'}} className={styles.sideNavContainer}>
-                <h2 color='black'>a;sdfjk</h2>
-                <div style={{color: "white"}}>hhh</div>
-                <SideNav />
-            </div>
-        </div>
+        </nav>
         
     )
 }
 
-export default Header;
+export default NavBar;

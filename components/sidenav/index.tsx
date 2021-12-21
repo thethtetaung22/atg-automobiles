@@ -1,24 +1,37 @@
+import { Close } from "@mui/icons-material";
 import Link from "next/link";
+import { useRouter } from "next/router";
 import styles from '../../styles/SideNav.module.scss';
 
-const SideNav = () => {
+const SideNav = ({ isOpen, toggle }: any) => {
+    const router = useRouter();
+
+    const handleRouter = (route: string) => {
+        toggle();
+        router.push(route);
+    }
+
+    const isCurrentRoute = (route: string) => {
+        return route === router.pathname;
+    }
+
     return (
-        <div className={styles.container}>
-            <div style={{color: "white"}}>hh</div>
-            <div>
-                <Link href="/">
-                    <a>Home</a>
-                </Link>
+        <div className={styles.container} style={{opacity: isOpen? '100%' : 0, top: isOpen? 0 : '-100%'}}>
+            <div className={styles.closeToggle} onClick={toggle}>
+                <Close fontSize="large"/>
             </div>
-            <div>
-                <Link href="/about">
-                    <a>About Us</a>
-                </Link>
-            </div>
-            <div>
-                <Link href="/login">
-                    <a>Login</a>
-                </Link>
+            <div className={styles.wrapper}>
+                <ul className={styles.menus}>
+                    <div onClick={() => handleRouter('/')} style={{color: isCurrentRoute('/') ? '#fc3636':''}}>
+                        <a>Home</a>
+                    </div>
+                    <div onClick={() => handleRouter('/about')} style={{color: isCurrentRoute('/about') ? '#fc3636':''}}>
+                        <a>About Us</a>
+                    </div>
+                    <div onClick={() => handleRouter('/login')} style={{color: isCurrentRoute('/login') ? '#fc3636':''}}>
+                        <a>Login</a>
+                    </div>
+                </ul>
             </div>
         </div>
     )
