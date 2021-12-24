@@ -1,4 +1,6 @@
-import { Divider } from "@mui/material";
+import { ArrowForwardIos } from "@mui/icons-material";
+import { Button, Divider } from "@mui/material";
+import { color } from "@mui/system";
 import Image from "next/image";
 import { useState } from "react";
 import { sampleCarList } from "../../data/sample";
@@ -27,13 +29,17 @@ const CarList = () => {
                         return (
                             <div className={styles.carContainer} key={car.id}>
                                 <div className={styles.previewImage}>
-                                    <Image 
+                                    <Image
+                                        alt={car.name}
                                         src={car.previewUrl}
                                         layout="responsive"
                                         height={200}
                                         width={300}
                                         priority
                                     />
+                                </div>
+                                <div className={styles.statusContainer} style={{backgroundColor: i ===2 || i==5 ? '#C60021': ''}}>
+                                    <span>{i ===2 || i==5 ? 'Sold Out' : 'Available'}</span>
                                 </div>
 
                                 <div className={styles.detailsContainer}>
@@ -55,6 +61,9 @@ const CarList = () => {
                                             <span>{car.fuelType}</span>
                                         </div>
                                     </div>
+                                </div>
+                                <div className={styles.viewDetailContainer}>
+                                    <Button className={styles.viewDetailBtn} variant="contained" endIcon={<ArrowForwardIos/>}> View Details </Button>
                                 </div>
                             </div>
                         )
