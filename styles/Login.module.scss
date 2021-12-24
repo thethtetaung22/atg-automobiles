@@ -1,0 +1,33 @@
+.container {
+    display: flex;
+    flex: 1 1 auto;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: #ececec;
+
+    .input {
+        width: 400px;
+        margin: 10px;
+
+        @media screen and (max-width: 600px) {
+            width: 80%;
+        }
+    }
+
+    .button {
+        width: 400px;
+        margin: 10px;
+        padding: 10px;
+        background-color: #C60021;
+        :hover {
+            background-color: #a7001c;
+            cursor: pointer;
+        }
+
+        @media screen and (max-width: 600px) {
+            width: 80%;
+        }
+    }
+}
+
