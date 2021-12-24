@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const host = 'http://ec2-3-0-103-45.ap-southeast-1.compute.amazonaws.com:8300'
+const host = 'http://ec2-3-0-103-45.ap-southeast-1.compute.amazonaws.com:8500'
 export const testAPI = async () => {
   try {
     return await axios.get(host);
