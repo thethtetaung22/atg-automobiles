@@ -2,11 +2,13 @@ import { ArrowForwardIos } from "@mui/icons-material";
 import { Button, Divider } from "@mui/material";
 import { color } from "@mui/system";
 import Image from "next/image";
+import { useRouter } from "next/router";
 import { useState } from "react";
 import { sampleCarList } from "../../data/sample";
 import styles from '../../styles/CarList.module.scss';
 
 const CarList = () => {
+    const router = useRouter();
     const [skip, setSkip] = useState(0);
     const data: any = [];
 
@@ -15,6 +17,11 @@ const CarList = () => {
             id: i+1,
             ...sampleCarList[0]
         });
+    }
+
+    const onViewDetail = (e: any, carId: string) => {
+        e.preventDefault();
+        router.push(`/car/${carId}`)
     }
 
     return (
@@ -63,7 +70,7 @@ const CarList = () => {
                                     </div>
                                 </div>
                                 <div className={styles.viewDetailContainer}>
-                                    <Button className={styles.viewDetailBtn} variant="contained" endIcon={<ArrowForwardIos/>}> View Details </Button>
+                                    <Button className={styles.viewDetailBtn} variant="contained" endIcon={<ArrowForwardIos/>} onClick={e => onViewDetail(e, car.id)}> View Details </Button>
                                 </div>
                             </div>
                         )

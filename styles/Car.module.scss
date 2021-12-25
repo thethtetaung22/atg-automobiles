@@ -1,0 +1,34 @@
+.container {
+    display: flex;
+    flex: 1 1 auto;
+    flex-direction: column;
+    padding: 30px;
+    font-family: Lato;
+
+    .topCard {
+        display: flex;
+        flex-direction: column;
+        padding: 10px;
+        flex: 1 1 auto;
+
+        .carName {
+            font-weight: bold;
+            font-size: 26px;
+            padding-left: 5px;
+            padding-bottom: 20px;
+        }
+
+        .imagesCard {
+            display: flex;
+            height: 200px;
+            padding: 15px;
+
+            .previewImage {
+                display: flex;
+                width: 300px;
+                height: 180px;
+                border-radius: 15px;
+            }
+        }
+    }
+}
