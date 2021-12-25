@@ -31,6 +31,9 @@ const SideNav = ({ isOpen, toggle }: any) => {
                     <div onClick={() => handleRouter('/login')} style={{color: isCurrentRoute('/login') ? '#fc3636':''}}>
                         <a>Login</a>
                     </div>
+                    <div onClick={() => handleRouter('/car/create')} style={{color: isCurrentRoute('/car/create') ? '#fc3636':''}}>
+                        <a>Create</a>
+                    </div>
                 </ul>
             </div>
         </div>
