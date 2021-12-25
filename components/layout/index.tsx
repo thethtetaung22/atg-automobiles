@@ -1,4 +1,3 @@
-import Footer from "../footer";
 import NavBar from "../nav";
 import styles from '../../styles/Layout.module.scss';
 import SideNav from "../sidenav";
@@ -15,7 +14,7 @@ const Layout = ({ children }: any) => {
             <SideNav isOpen={isOpen} toggle={toggleNav}/>
             <NavBar toggle={toggleNav}/>
             { children }
-            <Footer />
+            {/* <Footer /> */}
         </div>
     )
 }

@@ -29,6 +29,11 @@ const NavBar = ({ toggle }: any) => {
                         <a>Login</a>
                     </Link>
                 </div>
+                <div className={styles.link}>
+                    <Link href="/car/create">
+                        <a>Create</a>
+                    </Link>
+                </div>
             </div>
             <div className={styles.sideNavMenu} onClick={toggle}>
                 <MenuIcon fontSize='large'/>

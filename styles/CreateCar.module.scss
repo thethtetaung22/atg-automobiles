@@ -1,0 +1,67 @@
+@import 'colors';
+
+.container {
+    display: flex;
+    flex: 1 1 auto;
+    background-color: $background;
+    align-items: center;
+    padding: 30px;
+    flex-direction: column;
+    overflow: auto;
+
+    .previewUploadArea {
+        min-width: 200px;
+        min-height: 150px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        background-color: #e0e0e0;
+        font-size: 15px;
+        cursor: pointer;
+
+        span {
+            padding-top: 5px;
+        }
+    }
+
+    .previewImageLabel {
+        padding-top: 3px;
+        // font-style: italic;
+        font-size: 12px;
+    }
+
+    .textInput {
+        width: 500px;
+        margin: 10px;
+    }
+
+    .descInput {
+        width: 500px;
+        max-height: 250px;
+        margin: 10px;
+    }
+
+    .createBtn {
+        width: 500px;
+        background-color: $button-background;
+    }
+}
+
+@media screen and (max-width: 600px) {
+    .container {
+        padding: 20px;
+        
+        .textInput {
+            width: 80%;
+        }
+
+        .descInput {
+            width: 80%;
+        }
+
+        .createBtn {
+            width: 80%;
+        }
+    }
+}
