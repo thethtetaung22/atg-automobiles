@@ -32,17 +32,18 @@ const CreateCar = () => {
                 <CameraAltOutlined />
                 <span> Upload Preview</span>
             </Paper>
-            <TextField variant='outlined' label='Name' className={styles.textInput} autoFocus={true}/>
-            <TextField variant='outlined' label='Brand' className={styles.textInput}/>
-            <TextField variant='outlined' label='Model' className={styles.textInput}/>
-            <TextField variant='outlined' label='Year' className={styles.textInput}/>
-            <TextField variant='outlined' label='Type' className={styles.textInput}/>
-            <TextField variant='outlined' label='Engine Power' className={styles.textInput}/>
-            <TextField variant='outlined' label='Steering Position' className={styles.textInput}/>
-            <TextField variant='outlined' label='Transimission' className={styles.textInput}/>
-            <TextField variant='outlined' label='Fuel Type' className={styles.textInput}/>
-            <TextField variant='outlined' label='Color' className={styles.textInput}/>
-            <TextField variant='outlined' label='Mileage' className={styles.textInput}/>
+            <TextField variant='outlined' label='Name' className={styles.textInput} autoFocus={true} placeholder='BMW 5 Series'/>
+            <TextField variant='outlined' label='Brand' className={styles.textInput} placeholder='BMW'/>
+            <TextField variant='outlined' label='Model (Year)' className={styles.textInput} placeholder='2021'/>
+            <TextField variant='outlined' label='Type' className={styles.textInput} placeholder='Sport'/>
+            <TextField variant='outlined' label='Engine Power' className={styles.textInput} placeholder='140.00 kW (187 bhp)'/>
+            <TextField variant='outlined' label='Steering Position' className={styles.textInput} placeholder='Left'/>
+            <TextField variant='outlined' label='Transimission' className={styles.textInput} placeholder='Automatic'/>
+            <TextField variant='outlined' label='Key/Remote' className={styles.textInput} placeholder='Smart Key'/>
+            <TextField variant='outlined' label='Engine Capacity(cc)' className={styles.textInput} placeholder='2354 cc'/>
+            <TextField variant='outlined' label='Fuel Type' className={styles.textInput} placeholder='Pectrol'/>
+            <TextField variant='outlined' label='Color' className={styles.textInput} placeholder='Pearl White'/>
+            <TextField variant='outlined' label='Mileage' className={styles.textInput} placeholder='111 km'/>
             <TextField variant='outlined' label='Description' className={styles.descInput} multiline/>
             <Button variant='contained' className={styles.createBtn}> Create </Button>
         </div>

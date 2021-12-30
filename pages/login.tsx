@@ -1,4 +1,4 @@
-import { Button, TextField } from "@mui/material";
+import { Alert, Button, TextField } from "@mui/material";
 import axios from "axios";
 import { useState } from "react"
 import { login } from "../services/data.service";
@@ -11,6 +11,9 @@ const Login = () => {
     const onSubmit = async () => {
         const result = await login(email, password);
         console.log(result)
+        if (result?.data?.token) {
+            alert('Login Success!')
+        }
     }
 
     return (
