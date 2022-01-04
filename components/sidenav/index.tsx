@@ -1,9 +1,8 @@
 import { Close } from "@mui/icons-material";
-import Link from "next/link";
 import { useRouter } from "next/router";
 import styles from '../../styles/SideNav.module.scss';
 
-const SideNav = ({ isOpen, toggle }: any) => {
+const SideNav = ({ isOpen, toggle, isLoggedIn }: any) => {
     const router = useRouter();
 
     const handleRouter = (route: string) => {
@@ -13,6 +12,15 @@ const SideNav = ({ isOpen, toggle }: any) => {
 
     const isCurrentRoute = (route: string) => {
         return route === router.pathname;
+    }
+
+    const handleOnSignOut = (event: any) => {
+        event.preventDefault();
+        window?.sessionStorage.removeItem('token');
+        router.replace('/').then(() => {
+            router.reload();
+        });
+        toggle();
     }
 
     return (
@@ -28,12 +36,21 @@ const SideNav = ({ isOpen, toggle }: any) => {
                     <div onClick={() => handleRouter('/about')} style={{color: isCurrentRoute('/about') ? '#fc3636':''}}>
                         <a>About Us</a>
                     </div>
-                    <div onClick={() => handleRouter('/login')} style={{color: isCurrentRoute('/login') ? '#fc3636':''}}>
-                        <a>Login</a>
+                    {
+                        !isLoggedIn && <div onClick={() => handleRouter('/login')} style={{color: isCurrentRoute('/login') ? '#fc3636':''}}>
+                            <a>Login</a>
+                        </div>
+                    }
+                    {
+                        isLoggedIn && <div onClick={() => handleRouter('/car/create')} style={{color: isCurrentRoute('/car/create') ? '#fc3636':''}}>
+                            <a>Create</a>
+                        </div>
+                    }
+                    {
+                        isLoggedIn && <div onClick={handleOnSignOut}>
+                        Sign Out
                     </div>
-                    <div onClick={() => handleRouter('/car/create')} style={{color: isCurrentRoute('/car/create') ? '#fc3636':''}}>
-                        <a>Create</a>
-                    </div>
+                    }
                 </ul>
             </div>
         </div>
