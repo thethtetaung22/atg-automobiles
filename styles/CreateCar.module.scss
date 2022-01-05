@@ -31,37 +31,53 @@
         font-size: 12px;
     }
 
-    .textInput {
-        width: 500px;
-        margin: 10px;
-    }
+    form {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
 
-    .descInput {
-        width: 500px;
-        max-height: 250px;
-        margin: 10px;
-    }
+        .textInput {
+            width: 500px;
+            margin: 10px;
+        }
+    
+        .descInput {
+            width: 500px;
+            max-height: 250px;
+            margin: 10px;
+        }
 
-    .createBtn {
-        width: 500px;
-        background-color: $button-background;
+        .createBtn {
+            width: 500px;
+            background-color: $button-background;
+        }
     }
+    
 }
 
 @media screen and (max-width: 600px) {
     .container {
         padding: 20px;
-        
-        .textInput {
-            width: 80%;
+
+        .previewUploadArea {
+            min-width: 60%;
+            min-height: 120px;
         }
 
-        .descInput {
-            width: 80%;
-        }
+        form {
+            width: 100%;
 
-        .createBtn {
-            width: 80%;
+            .textInput {
+                width: 90%;
+            }
+    
+            .descInput {
+                width: 90%;
+            }
+    
+            .createBtn {
+                width: 90%;
+            }
         }
     }
 }

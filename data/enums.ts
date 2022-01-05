@@ -1,0 +1,56 @@
+export enum CAR_FUEL_TYPE_ENUM {
+    PETROL = 'PETROL',
+    DIESEL = 'DIESEL',
+    CMD = 'CMG',
+    ELECTRIC = 'ELECTRIC'
+}
+
+export enum CAR_KEY_TYPE_ENUM {
+    SMART_KEY = 'SMART_KEY',
+    NORMAL_KEY = 'NORMAL_KEY'
+}
+
+export enum CAR_STEERING_POSITION_ENUM {
+    LEFT = 'LEFT',
+    RIGHT = 'RIGHT'
+} 
+
+export enum CAR_TYPE_ENUM {
+    Sedan = 'Sedan',
+    Hatchback = 'Hatchback',
+    STATION_WAGON = 'STATION WAGON',
+    SPORTS = 'SPORTS',
+    SUV = 'SUV',
+    MPV_MINIVAN = 'MPV_MINIVAN',
+    PICKUP_TRUCK = 'PICKUP_TRUCK',
+    MEDIUM_TRUCK = 'MEDIUM_TRUCK',
+    HEAVY_TRUCK = 'HEAVY_TRUCK',
+    INDUSTRIAL_VEHICLE = 'INDUSTRIAL_VEHICLE'
+}
+
+export enum CAR_COLOR_ENUM {
+    WHITE = 'WHITE',
+    PEARL_WHITE = 'PEARL_WHITE',
+    GRAY = 'GRAY',
+    LIGHT_BROWN = 'LIGHT_BROWN',
+    BLACK = 'BLACK',
+    BLUE = 'BLUE',
+    DARK_BLUE = 'DARK_BLUE',
+    LIGHT_BLUE = 'LIGHT_BLUE',
+    SILVER = 'SILVER',
+    RED = 'RED',
+    GREEN = 'GREEN',
+    YELLOW = 'YELLOW',
+    GOLD = 'GOLD',
+    PEARL_GOLD = 'PEARL_GOLD',
+    PINK = 'PINK',
+    PURPLE = 'PURPLE',
+    ORANGE = 'ORANGE'
+}
+
+
+export enum CAR_TRANSMISSION_ENUM {
+    AUTO = 'AUTO',
+    MANUAL = 'MANUAL',
+    SENI_AUTO = 'SEMI_AUTO'
+}
