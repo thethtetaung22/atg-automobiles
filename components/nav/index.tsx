@@ -22,6 +22,7 @@ const NavBar = ({ toggle, isLoggedIn }: any) => {
                     src={'/atglogo.png'}
                     width={130}
                     height={90}
+                    alt="logo"
                     />
             </div>
             <div className={styles.menus}>

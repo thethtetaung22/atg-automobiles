@@ -73,8 +73,8 @@ const CreateCar = () => {
                     className={styles.textInput}
                     onChange={(e) => setType(e.target.value)}>
                     {
-                    carType.map((type: string) => {
-                        return <MenuItem value={type}>{type}</MenuItem>
+                    carType.map((type: string, i: number) => {
+                        return <MenuItem value={type} key={i}>{type}</MenuItem>
                     })
                     }
                 </Select>
