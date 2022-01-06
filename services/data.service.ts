@@ -32,3 +32,29 @@ export const validateToken = async (token?: string)  =>  {
     console.log(error);
   }
 }
+
+export const createMedia = async (token: string, obj: any) => {
+  try {
+    const result = await axios.post(`${host}/media`,
+      obj, {
+      headers: {
+        'Authorization' : `Bearer ${token}`,
+        'Content-Type': 'application/json'
+      }
+    });
+    return {
+      status: result.status,
+      result: result.data
+    };
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+export const uploadToS3 = async (url: string, file: any)  =>  {
+  try {
+    return await axios.put(url, file);
+  } catch (error) {
+    console.log(error);
+  }
+}

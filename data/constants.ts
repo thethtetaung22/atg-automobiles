@@ -23,14 +23,14 @@ export const fuelTypes = [
     'Electric'
 ];
 
-export const keyType = [
+export const keyTypes = [
     'Smart Key (Remote)',
     'Key'
 ];
 
 export const carSteeringPosition = ['Left', 'Right'];
 
-export const carType = [
+export const carTypes = [
     'Sedan',
     'Hatchback',
     'Station Wagon',
@@ -44,7 +44,7 @@ export const carType = [
     'Other'
 ];
 
-export const transmission = [
+export const transmissions = [
     'Auto',
     'Manual',
     'Semi-Auto'
