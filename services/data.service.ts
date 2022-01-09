@@ -51,9 +51,33 @@ export const createMedia = async (token: string, obj: any) => {
   }
 }
 
-export const uploadToS3 = async (url: string, file: any)  =>  {
+export const getPresignedURL = async (token: string, query: any) => {
   try {
-    return await axios.put(url, file);
+    const result = await axios.get(`${host}/cdn/get-presigned-url?name=${query.name}&mimeType=${query.mimeType}`, {
+      headers: {
+        'Authorization' : `Bearer ${token}`,
+        'Content-Type': 'application/json'
+      }
+    });
+    return {
+      status: result.status,
+      result: result.data
+    };
+  } catch (error) {
+    console.log(error);
+  }
+
+}
+
+
+
+export const uploadToS3 = async (url: string, file: any, contentType: string)  =>  {
+  try {
+    return await axios.put(url, file, {
+      headers: {
+        'Content-Type': contentType
+      }
+    });
   } catch (error) {
     console.log(error);
   }

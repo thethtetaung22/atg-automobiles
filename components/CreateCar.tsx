@@ -1,13 +1,35 @@
-import { CameraAltOutlined } from '@mui/icons-material';
-import { Button, FormControl, InputLabel, MenuItem, Paper, Select, TextField } from '@mui/material';
-import React, { useCallback, useEffect, useState } from 'react'
-import Dropzone, { useDropzone } from 'react-dropzone';
-import { carTypes, carSteeringPosition, colors, transmissions, keyTypes, fuelTypes } from '../data/constants';
-import { createMedia, uploadToS3, validateToken } from '../services/data.service';
+import { AddCircleRounded, CameraAltOutlined, CloseRounded } from '@mui/icons-material';
+import { 
+    Backdrop, 
+    Button, 
+    CircularProgress, 
+    FormControl, 
+    InputLabel, 
+    MenuItem, 
+    Select, 
+    TextField 
+} from '@mui/material';
+import Image from 'next/image';
+import React, { useCallback, useEffect, useState } from 'react';
+import { useRouter } from 'next/router';
+import Dropzone from 'react-dropzone';
+import { 
+    carTypes, 
+    carSteeringPosition, 
+    colors, 
+    transmissions, 
+    keyTypes, 
+    fuelTypes 
+} from '../data/constants';
+import { getPresignedURL, uploadToS3 } from '../services/data.service';
 import styles from '../styles/CreateCar.module.scss';
+import { validateToken } from '../services/data.service';
 
 const CreateCar = () => {
-    const [token, setToken] = useState<string>();
+    const router = useRouter()
+    const [previewUrl, setPreviewUrl] = useState<string>();
+    const [moreImages, setMoreImages] = useState<string[]>([]);
+    const [showLoading, setShowLoading] = useState<boolean>(false);
     const [type, setType] = useState<string>(carTypes[0]);
     const [customType, setCustomType] = useState<string>();
     const [steeringPosition, setSteeringPosition] = useState<string>(carSteeringPosition[0]);
@@ -17,52 +39,55 @@ const CreateCar = () => {
     const [color, setColor] = useState<string>(colors[0]);
     const [otherColor, setOtherColor] = useState<string>();
 
-    const validateSessionToken = async (token?: string|null) => {
-        try {
-            if (token && await validateToken(token)) {
-                setToken(token);
-            }
-        } catch (error) {
-            console.log(error);
+    const checkLoginState = async (token: string|null) => {
+        let isValid: any;
+
+        if(token) {
+            isValid = await validateToken(token);
+        }
+
+        if (!token || !isValid) {
+            window?.sessionStorage.removeItem('token');
+            router.replace('/').then(() => {
+                router.reload();
+            });
         }
     }
 
-    const onDrop = useCallback(async (acceptedFiles, isPreview?: boolean) => {
+    const onDrop = useCallback(async (acceptedFiles, isPreview: boolean = false) => {
+        if (acceptedFiles.length > 0) {
+            setShowLoading(true);
+        }
         for (let i = 0; i < acceptedFiles.length; i++) {
-            const reader = new FileReader();
-
-            if (typeof token === 'string') {
-                const obj = {
+            const token = window?.sessionStorage.getItem('token');
+            console.log(token)
+            if (token) {
+                const query = {
                     name: acceptedFiles[i].name,
-                    mimeType: acceptedFiles[i].type,
-                    size: Number(acceptedFiles[i].size)
+                    mimeType: acceptedFiles[i].type
                 }
 
-                const result = await createMedia(token, obj);
-
-                if (result?.status === 201 && result.result) {
-                    reader.onabort = () => console.log('file reading was aborted')
-                    reader.onerror = () => console.log('file reading has failed')
-                    reader.onload = async () => {
-                        const binaryStr = reader.readAsBinaryString(acceptedFiles[i])
-                        console.log(binaryStr)
-                        const uploadResult = await uploadToS3(result.result.presignedUrl, binaryStr);
-                        console.log(uploadResult);
+                const result = await getPresignedURL(token, query);
+                console.log(result);
+                if (result?.status === 200 && result.result?.signedRequest) {
+                    const uploadResult = await uploadToS3(result.result.signedRequest, acceptedFiles[i], query.mimeType);
+                    console.log(uploadResult);
+                    if (uploadResult?.status === 200) {
+                        if (isPreview) {
+                            setPreviewUrl(result.result.url);
+                        } else {
+                            const images = moreImages;
+                            images.push(result.result.url)
+                            setMoreImages(images);
+                            console.log(moreImages);
+                        }
                     }
                     // reader.readAsArrayBuffer(acceptedFiles[i])
                 }
             }
         }
+        setShowLoading(false);
     }, []);
-
-    useEffect(() => {
-        const token = window?.sessionStorage.getItem('token');
-        validateSessionToken(token);
-    }, [token]);
-
-    const handlePreviewUpload = () => {
-
-    }
 
     const handleFormSubmit = (event: any) => {
         event.preventDefault();
@@ -81,24 +106,91 @@ const CreateCar = () => {
             mileage,
             description  
         } = event.target;
-
+        
         // let inputData = {
-        //     name: 
-        // }
+            //     name: 
+            // }
     }
+
+    const handleOnRemove = (e: any, i: number) => {
+        e.preventDefault();
+        setShowLoading(true);
+        const images = moreImages;
+        images.splice(i, 1);
+        setMoreImages(images);
+        setTimeout(() => {
+            setShowLoading(false);
+        }, 300)
+    }
+
+    useEffect(() => {
+        const token = window?.sessionStorage.getItem('token');
+        checkLoginState(token);
+    }, []);
 
     return (
         <div className={styles.container}>
+            <Backdrop
+                sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+                open={showLoading}
+            >
+                <CircularProgress color="inherit" />
+            </Backdrop>
             <Dropzone onDrop={acceptedFiles => onDrop(acceptedFiles, true)}>
                 {({getRootProps, getInputProps}) => (
                     <section>
                         <div {...getRootProps()} className={styles.previewUploadArea}>
                             <input {...getInputProps()} multiple={false} accept='image/*, video/*'/>
-                            <CameraAltOutlined /><span> Upload Preview</span>
+                            {
+                                previewUrl && 
+                                <Image
+                                    src={previewUrl}
+                                    alt={'preview'}
+                                    width={200}
+                                    height={160}
+                                />
+                            }
+                            <div className={styles.body}>
+                                <CameraAltOutlined />
+                                {!previewUrl && <span> Upload Preview</span>}
+                            </div>
                         </div>
                     </section>
                 )}
             </Dropzone>
+            <div className={styles.moreImgContainer}> 
+                <div className={styles.imagesContainer}>
+                    { moreImages.length === 0 && <span className={styles.label}>Add More Images</span>  }
+                    {
+                        moreImages?.map((image, i) => {
+                            return image && 
+                            <div className={styles.image} key={image}>
+                                <div className={styles.removeBtn} onClick={(e) => handleOnRemove(e, i)}>
+                                    <CloseRounded />
+                                </div>
+                                <Image
+                                    src={image}
+                                    alt={`image-${i}`}
+                                    width={100}
+                                    height={100}
+                                />
+                            </div>
+                        })
+                    }
+                </div>
+                    <Dropzone onDrop={acceptedFiles => onDrop(acceptedFiles)}>
+                        {({getRootProps, getInputProps}) => (
+                            <section>
+                                <div {...getRootProps()} className={styles.imagesUploadArea}>
+                                    <input {...getInputProps()} multiple={false} accept='image/*, video/*'/>
+                                    <div className={styles.body}>
+                                        <AddCircleRounded style={{color: '#C60021'}}/>
+                                    </div>
+                                </div>
+                            </section>
+                        )}
+                    </Dropzone>
+            </div>
             <form onSubmit={handleFormSubmit}>
                 <TextField id='name' variant='outlined' label='Name' className={styles.textInput} autoFocus={true} placeholder='BMW 5 Series'/>
                 <TextField id="brand" variant='outlined' label='Brand' className={styles.textInput} placeholder='BMW'/>

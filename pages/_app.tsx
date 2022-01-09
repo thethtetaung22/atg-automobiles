@@ -2,14 +2,24 @@ import '../styles/globals.scss'
 import type { AppProps } from 'next/app'
 import Layout from '../components/layout'
 import Head from 'next/head'
+import { useEffect, useState } from 'react'
 
 function MyApp({ Component, pageProps }: AppProps) {
+  const [token, setToken] = useState<any>();
+
+  useEffect(() => {
+    const token = window.sessionStorage.getItem('token');
+    if (token) {
+      setToken(token);
+    }
+  });
+
   return (
-    <Layout>
+    <Layout token={token}>
        <Head>
         <title>ATG Automobiles</title>
       </Head>
-      <Component {...pageProps}/>
+      <Component {...pageProps} token={token}/>
     </Layout>
   )
 }

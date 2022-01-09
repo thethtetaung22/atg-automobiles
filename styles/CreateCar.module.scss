@@ -14,21 +14,79 @@
         min-height: 150px;
         display: flex;
         flex-direction: column;
-        justify-content: center;
         align-items: center;
+        justify-content: center;
         background-color: #e0e0e0;
         font-size: 15px;
         cursor: pointer;
 
-        span {
-            padding-top: 5px;
+        .body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 5px;
         }
     }
 
-    .previewImageLabel {
-        padding-top: 3px;
-        // font-style: italic;
-        font-size: 12px;
+    
+
+    .moreImgContainer {
+        display: flex;
+        max-width: 70%;
+        align-items: center;
+        margin: 10px;
+        height: 100px;
+        padding-left: 5px;
+        background-color: #e2e2e2;
+
+        .label {
+            font-size: 12px;
+            font-style: italic;
+        }
+
+        .imagesContainer {
+            min-width: 100px;
+            display: flex;
+            flex: 1;
+            overflow: auto;
+            align-items: center;
+
+            .image {
+                display: flex;
+                flex: none;
+                width: 100px;
+                height: 90px;
+                margin: 10px 5px 10px 0;
+                border: 1px solid white;
+                position: relative;
+
+                .removeBtn {
+                    position: absolute;
+                    z-index: 10;
+                    cursor: pointer;
+                }
+            }
+        }
+
+        .imagesUploadArea {
+            min-width: 50px;
+            min-height: 100px;
+            display: flex;
+            flex: none;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background-color: #cacaca;
+            font-size: 15px;
+            cursor: pointer;
+
+            .body {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                padding: 5px;
+            }
+        }
     }
 
     form {
