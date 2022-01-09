@@ -25,7 +25,8 @@ export const fuelTypes = [
 
 export const keyTypes = [
     'Smart Key (Remote)',
-    'Key'
+    'Key',
+    'Other'
 ];
 
 export const carSteeringPosition = ['Left', 'Right'];

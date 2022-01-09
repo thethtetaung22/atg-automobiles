@@ -66,10 +66,7 @@ export const getPresignedURL = async (token: string, query: any) => {
   } catch (error) {
     console.log(error);
   }
-
 }
-
-
 
 export const uploadToS3 = async (url: string, file: any, contentType: string)  =>  {
   try {
@@ -80,5 +77,23 @@ export const uploadToS3 = async (url: string, file: any, contentType: string)  =
     });
   } catch (error) {
     console.log(error);
+  }
+}
+
+export const createNewCarApi = async (token: string, body: any): Promise<any> => {
+  try {
+    const result = await axios.post(`${host}/car`, body, {
+      headers: {
+        'Authorization' : `Bearer ${token}`,
+        'Content-Type': 'application/json'
+      }
+    });
+    return {
+      status: result.status,
+      result: result.data
+    };
+  } catch (error) {
+    console.log(error);
+    return error;
   }
 }

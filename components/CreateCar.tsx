@@ -1,57 +1,94 @@
 import { AddCircleRounded, CameraAltOutlined, CloseRounded } from '@mui/icons-material';
-import { 
-    Backdrop, 
-    Button, 
-    CircularProgress, 
-    FormControl, 
-    InputLabel, 
-    MenuItem, 
-    Select, 
-    TextField 
+import {
+    Alert,
+    AlertTitle,
+    Backdrop,
+    Button,
+    CircularProgress,
+    Dialog,
+    DialogActions,
+    DialogContent,
+    DialogTitle,
+    FormControl,
+    InputLabel,
+    MenuItem,
+    OutlinedInput,
+    Select,
+    Slide,
+    Snackbar,
+    TextField
 } from '@mui/material';
+import { DatePicker, DesktopDatePicker, LocalizationProvider } from '@mui/lab';
+import AdapterDateFns from '@mui/lab/AdapterDateFns';
 import Image from 'next/image';
 import React, { useCallback, useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import Dropzone from 'react-dropzone';
-import { 
-    carTypes, 
-    carSteeringPosition, 
-    colors, 
-    transmissions, 
-    keyTypes, 
-    fuelTypes 
+import {
+    carTypes,
+    carSteeringPosition,
+    colors,
+    transmissions,
+    keyTypes,
+    fuelTypes
 } from '../data/constants';
-import { getPresignedURL, uploadToS3 } from '../services/data.service';
+import { createNewCarApi, getPresignedURL, uploadToS3 } from '../services/data.service';
 import styles from '../styles/CreateCar.module.scss';
 import { validateToken } from '../services/data.service';
+import { Box } from '@mui/system';
 
 const CreateCar = () => {
-    const router = useRouter()
+    const router = useRouter();
+
+    // Flags
+    const [openAlert, setOpenAlert] = useState<boolean>(false);
+    const [showLoading, setShowLoading] = useState<boolean>(false);
+    const [openSuccessDialog, setOpenSuccessDialog] = useState<boolean>(false);
+
+    // Error
+    const [openSnackbar, setOpenSnackbar] = useState<boolean>(false);
+    const [message, setMessage] = useState<string>();
+
+    // Form Data
+    const [name, setName] = useState<string>();
+    const [brand, setBrand] = useState<string>();
+    const [model, setModel] = useState<any>(new Date());
     const [previewUrl, setPreviewUrl] = useState<string>();
     const [moreImages, setMoreImages] = useState<string[]>([]);
-    const [showLoading, setShowLoading] = useState<boolean>(false);
-    const [type, setType] = useState<string>(carTypes[0]);
-    const [customType, setCustomType] = useState<string>();
+    const [enginePower, setEnginerPower] = useState<number>(0);
+    const [engineCapacity, setEngineCapacity] = useState<number>(0);
+    const [mileage, setMileage] = useState<number>(0);
+    const [description, setDescription] = useState<string>();
+
     const [steeringPosition, setSteeringPosition] = useState<string>(carSteeringPosition[0]);
     const [transmission, setTransmission] = useState<string>(transmissions[0]);
-    const [keyType, setKeyType] = useState<string>(keyTypes[0]);
     const [fuelType, setFuelType] = useState<string>(fuelTypes[0]);
+
+    const [keyType, setKeyType] = useState<string>(keyTypes[0]);
+    const [customKeyType, setCustomKeyType] = useState<string>();
+
+    const [type, setType] = useState<string>(carTypes[0]);
+    const [customType, setCustomType] = useState<string>();
+
     const [color, setColor] = useState<string>(colors[0]);
-    const [otherColor, setOtherColor] = useState<string>();
+    const [customColor, setCustomColor] = useState<string>();
 
-    const checkLoginState = async (token: string|null) => {
-        let isValid: any;
+    const handleSignOut = () => {
+        window?.sessionStorage.removeItem('token');
+        router.replace('/').then(() => {
+            router.reload();
+        });
+    }
 
-        if(token) {
+    const checkToken = async (token: string | null) => {
+        let isValid: any = true;
+        if (token) {
             isValid = await validateToken(token);
         }
-
         if (!token || !isValid) {
-            window?.sessionStorage.removeItem('token');
-            router.replace('/').then(() => {
-                router.reload();
-            });
+            setOpenAlert(true);
         }
+        return true;
     }
 
     const onDrop = useCallback(async (acceptedFiles, isPreview: boolean = false) => {
@@ -89,29 +126,6 @@ const CreateCar = () => {
         setShowLoading(false);
     }, []);
 
-    const handleFormSubmit = (event: any) => {
-        event.preventDefault();
-        const { 
-            name, 
-            brand, 
-            model, 
-            type, 
-            enginePower,
-            steeringPosition,
-            transmission,
-            keyType,
-            engineCapacity,
-            fuelType,
-            color,
-            mileage,
-            description  
-        } = event.target;
-        
-        // let inputData = {
-            //     name: 
-            // }
-    }
-
     const handleOnRemove = (e: any, i: number) => {
         e.preventDefault();
         setShowLoading(true);
@@ -123,26 +137,169 @@ const CreateCar = () => {
         }, 300)
     }
 
+    const handleSnackarClose = () => {
+        setOpenSnackbar(false);
+        setMessage('');
+      };
+
+    const renderSnackar = () => {
+        return <Snackbar
+            style={{width: '80%', alignSelf: 'center', display: openSnackbar ? '' : 'none'}}
+            open={openSnackbar}
+            autoHideDuration={5000}
+            anchorOrigin={{ vertical: 'bottom', horizontal: 'center'}}
+            TransitionComponent={(props) => <Slide {...props} direction="up" />}
+        >
+            <Alert onClose={handleSnackarClose} severity="error" sx={{ width: '100%' }} style={{backgroundColor: '#C60021', color: 'white', display: openSnackbar ? '' : 'none'}}>
+                {message}
+            </Alert>
+        </Snackbar>
+    }
+
+    const renderSessionExpireDialog = () => {
+        return <Dialog open={openAlert} fullWidth>
+            <DialogTitle>Session Expired!</DialogTitle>
+            <DialogContent>
+                <span>Session expired, please login and try again.</span>
+            </DialogContent>
+            <DialogActions>
+                <Button onClick={handleSignOut} variant="contained" color='error'>
+                    Sign Out
+                </Button>
+            </DialogActions>
+        </Dialog>
+    }
+
+    const renderCreateSuccessDialog = () => {
+        return <Dialog open={openSuccessDialog} fullWidth>
+        <DialogTitle>Success!</DialogTitle>
+        <DialogContent>
+            <span>New car is created successful!</span>
+        </DialogContent>
+        <DialogActions>
+            <Button onClick={() => {
+                setOpenSuccessDialog(false);
+                router.reload();
+            }} color="error">
+                OK
+            </Button>
+        </DialogActions>
+    </Dialog>
+    }
+
+    const checkFormValidation = () => {
+        let isValid = true;
+        let errorMessage = '';
+        if (!previewUrl) {
+            isValid = false;
+            errorMessage = 'Preview Image is required.';
+        } else if (!name) {
+            isValid = false;
+            setName('');
+            errorMessage = 'Name is required.';
+        } else if (!brand) {
+            isValid = false;
+            setBrand('');
+            errorMessage = 'Brand is required.';
+        } else if (type.toLowerCase() === 'other' && !customType) {
+            isValid = false;
+            setCustomType('');
+            errorMessage = 'Custom Car Type is required.';
+        } else if(color.toLowerCase() === 'other' && !customColor) {
+            isValid = false;
+            setCustomColor('');
+            errorMessage = 'Custom Color is required.';
+        } else if(keyType.toLowerCase() === 'other' && !customKeyType) {
+            isValid = false;
+            setCustomKeyType('');
+            errorMessage = 'Custom Key Type is required.';
+        } else if (engineCapacity === 0) {
+            isValid = false;
+            errorMessage = 'Engine Capacity is required.';
+        } else if (enginePower === 0) {
+            isValid = false;
+            errorMessage = 'Engine Power is required.';
+        }
+        if(!isValid) {
+            setMessage(errorMessage);
+            setOpenSnackbar(true);
+        }
+        return isValid;
+    }
+
+    const handleFormSubmit = async (event: any) => {
+        event.preventDefault();
+        const isValid = checkFormValidation();
+        if (isValid) {
+            let reqBody: any = {
+                name,
+                preview_url: previewUrl,
+                more_image_urls: moreImages,
+                brand,
+                model: model?.getFullYear(),
+                type: type.toLowerCase() === 'other', customType: type,
+                engine_power: enginePower,
+                steering_position: steeringPosition,
+                transmission: transmission,
+                key: keyType,
+                engine_capacity: engineCapacity,
+                fuel_type: fuelType,
+                color: color.toLowerCase() === 'other' ? customColor : color,
+                mileage: mileage,
+                description: description
+            };
+    
+            console.log('req value:', reqBody);
+            const token = window?.sessionStorage.getItem('token');
+            if (token) {
+                setShowLoading(true);
+                const isValid = await checkToken(token);
+                setShowLoading(false);
+                if (isValid) {
+                    setShowLoading(true);
+                    const result = await createNewCarApi(token, reqBody);
+                    console.log(result);
+                    if (result.status === 201) {
+                        setShowLoading(false);
+                        setOpenSuccessDialog(true);
+                    }
+                }
+            }
+        }
+    }
+
+
     useEffect(() => {
         const token = window?.sessionStorage.getItem('token');
-        checkLoginState(token);
+        checkToken(token);
     }, []);
 
     return (
         <div className={styles.container}>
+            {
+                renderSessionExpireDialog()
+            }
+            {
+                renderCreateSuccessDialog()
+            }
+
             <Backdrop
                 sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
                 open={showLoading}
             >
                 <CircularProgress color="inherit" />
             </Backdrop>
+
+            {
+                renderSnackar()
+            }
             <Dropzone onDrop={acceptedFiles => onDrop(acceptedFiles, true)}>
-                {({getRootProps, getInputProps}) => (
+                {({ getRootProps, getInputProps }) => (
                     <section>
                         <div {...getRootProps()} className={styles.previewUploadArea}>
-                            <input {...getInputProps()} multiple={false} accept='image/*, video/*'/>
+                            <input {...getInputProps()} multiple={false} accept='image/*, video/*' />
                             {
-                                previewUrl && 
+                                previewUrl &&
                                 <Image
                                     src={previewUrl}
                                     alt={'preview'}
@@ -158,65 +315,113 @@ const CreateCar = () => {
                     </section>
                 )}
             </Dropzone>
-            <div className={styles.moreImgContainer}> 
+
+            <div className={styles.moreImgContainer}>
                 <div className={styles.imagesContainer}>
-                    { moreImages.length === 0 && <span className={styles.label}>Add More Images</span>  }
+                    {moreImages.length === 0 && <span className={styles.label}>Add More Images</span>}
                     {
                         moreImages?.map((image, i) => {
-                            return image && 
-                            <div className={styles.image} key={image}>
-                                <div className={styles.removeBtn} onClick={(e) => handleOnRemove(e, i)}>
-                                    <CloseRounded />
+                            return image &&
+                                <div className={styles.image} key={image}>
+                                    <div className={styles.removeBtn} onClick={(e) => handleOnRemove(e, i)}>
+                                        <CloseRounded />
+                                    </div>
+                                    <Image
+                                        src={image}
+                                        alt={`image-${i}`}
+                                        width={100}
+                                        height={100}
+                                    />
                                 </div>
-                                <Image
-                                    src={image}
-                                    alt={`image-${i}`}
-                                    width={100}
-                                    height={100}
-                                />
-                            </div>
                         })
                     }
                 </div>
-                    <Dropzone onDrop={acceptedFiles => onDrop(acceptedFiles)}>
-                        {({getRootProps, getInputProps}) => (
-                            <section>
-                                <div {...getRootProps()} className={styles.imagesUploadArea}>
-                                    <input {...getInputProps()} multiple={false} accept='image/*, video/*'/>
-                                    <div className={styles.body}>
-                                        <AddCircleRounded style={{color: '#C60021'}}/>
-                                    </div>
+                <Dropzone onDrop={acceptedFiles => onDrop(acceptedFiles)}>
+                    {({ getRootProps, getInputProps }) => (
+                        <section>
+                            <div {...getRootProps()} className={styles.imagesUploadArea}>
+                                <input {...getInputProps()} multiple={false} accept='image/*, video/*' />
+                                <div className={styles.body}>
+                                    <AddCircleRounded style={{ color: '#C60021' }} />
                                 </div>
-                            </section>
-                        )}
-                    </Dropzone>
+                            </div>
+                        </section>
+                    )}
+                </Dropzone>
             </div>
-            <form onSubmit={handleFormSubmit}>
-                <TextField id='name' variant='outlined' label='Name' className={styles.textInput} autoFocus={true} placeholder='BMW 5 Series'/>
-                <TextField id="brand" variant='outlined' label='Brand' className={styles.textInput} placeholder='BMW'/>
-                <TextField id="model" variant='outlined' label='Model (Year)' className={styles.textInput} placeholder='2021'/>
-                
+
+            <Box className={styles.form} component={'form'} onSubmit={handleFormSubmit}>
+                <TextField
+                    error={name?.trim().length === 0}
+                    helperText={name?.trim().length === 0 ? 'Name is required.' : ''}
+                    id='name'
+                    variant='outlined'
+                    label='Name'
+                    className={styles.textInput}
+                    autoFocus={true}
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                    placeholder='BMW 5 Series' />
+
+                <TextField
+                    error={brand?.trim().length === 0}
+                    helperText={brand?.trim().length === 0 ? 'Brand is required.' : ''}
+                    id="brand"
+                    variant='outlined'
+                    label='Brand'
+                    className={styles.textInput}
+                    placeholder='BMW'
+                    value={brand}
+                    onChange={(e) => setBrand(e.target.value)} />
+
+                <LocalizationProvider dateAdapter={AdapterDateFns}>
+                    <DatePicker
+                        views={['year']}
+                        label="Model"
+                        value={model}
+                        onChange={(newValue) => {
+                            if (newValue) {
+                                setModel(newValue);
+                            }
+                        }}
+                        minDate={new Date('1990-1-1')}
+                        maxDate={new Date()}
+                        renderInput={(params) => <TextField {...params} helperText={null} className={styles.textInput} />}
+                    />
+                </LocalizationProvider>
+
                 <FormControl fullWidth className={styles.textInput}>
                     <InputLabel id="type-select-label">Type</InputLabel>
-                    <Select 
+                    <Select
                         labelId='type-select-label'
                         label="Type"
                         value={type}
                         onChange={(e) => setType(e.target.value)}>
                         {
-                        carTypes.map((type: string, i: number) => {
-                            return <MenuItem value={type} key={i}>{type}</MenuItem>
-                        })
+                            carTypes.map((type: string, i: number) => {
+                                return <MenuItem value={type} key={i}>{type}</MenuItem>
+                            })
                         }
                     </Select>
                 </FormControl>
+
                 {
                     type?.toLowerCase() === 'other' &&
-                    <TextField variant='outlined' value={customType} label='Enter Car Type' className={styles.textInput} placeholder='Sport' onChange={(e) => setCustomType(e.target.value)}/>
+                    <TextField 
+                        error={customType?.trim().length === 0}
+                        helperText={customType?.trim().length === 0 ? 'Custom Type is required.' : ''}
+                        id='custom-type'
+                        variant='outlined' 
+                        label='Enter Car Type' 
+                        className={styles.textInput} 
+                        placeholder='Sport' 
+                        value={customType} 
+                        onChange={(e) => setCustomType(e.target.value)} />
                 }
+
                 <FormControl fullWidth className={styles.textInput}>
                     <InputLabel id="position-select-label">Steering Position</InputLabel>
-                    <Select 
+                    <Select
                         labelId='position-select-label'
                         label='Steering Position'
                         value={steeringPosition}
@@ -228,9 +433,10 @@ const CreateCar = () => {
                         }
                     </Select>
                 </FormControl>
+
                 <FormControl fullWidth className={styles.textInput}>
                     <InputLabel id="transmission-select-label">Transmission</InputLabel>
-                    <Select 
+                    <Select
                         labelId='transmission-select-label'
                         label="Transmission"
                         value={transmission}
@@ -242,9 +448,10 @@ const CreateCar = () => {
                         }
                     </Select>
                 </FormControl>
+
                 <FormControl fullWidth className={styles.textInput}>
                     <InputLabel id="key-select-label">Key Type</InputLabel>
-                    <Select 
+                    <Select
                         labelId='key-select-label'
                         label='Key Type'
                         value={keyType}
@@ -256,9 +463,23 @@ const CreateCar = () => {
                         }
                     </Select>
                 </FormControl>
+
+                {
+                    keyType?.toLowerCase() === 'other' &&
+                    <TextField 
+                        error={customKeyType?.trim().length === 0}
+                        helperText={customKeyType?.trim().length === 0 ? 'Custom Key Type is required.' : ''}
+                        id='custom-key-type'
+                        variant='outlined' 
+                        label='Enter Key Type' 
+                        className={styles.textInput}
+                        value={customKeyType} 
+                        onChange={(e) => setCustomKeyType(e.target.value)} />
+                }
+
                 <FormControl fullWidth className={styles.textInput}>
                     <InputLabel id="fuel-select-label">Fuel Type</InputLabel>
-                    <Select 
+                    <Select
                         labelId='fuel-select-label'
                         label='Fuel Type'
                         value={fuelType}
@@ -270,9 +491,10 @@ const CreateCar = () => {
                         }
                     </Select>
                 </FormControl>
+
                 <FormControl fullWidth className={styles.textInput}>
                     <InputLabel id="color-select-label">Color</InputLabel>
-                    <Select 
+                    <Select
                         labelId='color-select-label'
                         label='Color'
                         value={color}
@@ -284,16 +506,85 @@ const CreateCar = () => {
                         }
                     </Select>
                 </FormControl>
+
                 {
                     color?.toLowerCase() === 'other' &&
-                    <TextField id="color" value={otherColor} variant='outlined' label='Custom Color' className={styles.textInput} placeholder='Pearl White' onChange={(e) => setOtherColor(e.target.value)}/>
+                    <TextField 
+                        className={styles.textInput} 
+                        error={customColor?.trim().length === 0}
+                        helperText={customColor?.trim().length === 0 ? 'Custom Color is required.' : ''}
+                        id="custom-color" 
+                        label='Custom Color' 
+                        variant='outlined' 
+                        placeholder='Pearl White' 
+                        value={customColor} 
+                        onChange={(e) => setCustomColor(e.target.value)} />
                 }
-                <TextField id="engineCapacity" variant='outlined' label='Engine Capacity(cc)' className={styles.textInput} placeholder='2354'/>
-                <TextField id="enginePower" variant='outlined' label='Engine Power' className={styles.textInput} placeholder='140.00 kW (187 bhp)'/>
-                <TextField id="mileage" variant='outlined' label='Mileage' className={styles.textInput} placeholder='111 km'/>
-                <TextField id="description" variant='outlined' label='Description' className={styles.descInput} multiline/>
+
+                <TextField 
+                    className={styles.textInput} 
+                    id="engineCapacity" 
+                    variant='outlined' 
+                    label='Engine Capacity(cc)' 
+                    placeholder='2354'
+                    type={'number'}
+                    value={engineCapacity}
+                    onChange={(e) => {
+                        const capacity = parseInt(e.target.value);
+                        console.log(capacity);
+                        console.log(engineCapacity)
+                        if (capacity >= 0) {
+                            setEngineCapacity(capacity);
+                        } else {
+                            setEngineCapacity(0);
+                        }
+                    }}/>
+
+                <TextField 
+                    id="enginePower" 
+                    variant='outlined' 
+                    label='Engine Power' 
+                    className={styles.textInput} 
+                    placeholder='140.00 kW (187 bhp)'
+                    type={'number'}
+                    value={enginePower}
+                    onChange={(e) => {
+                        if (parseInt(e.target.value) >= 0) {
+                            setEnginerPower(parseInt(e.target.value));
+                        } else {
+                            setEnginerPower(0);
+                        }
+                    }}/>
+
+                <TextField 
+                    id="mileage" 
+                    variant='outlined' 
+                    label='Mileage' 
+                    className={styles.textInput} 
+                    placeholder='111 km' 
+                    type={'number'}
+                    value={mileage}
+                    onChange={(e) => {
+                        if (parseInt(e.target.value) >= 0) {
+                            setMileage(parseInt(e.target.value));
+                        } else {
+                            setMileage(0);
+                        }
+                    }}/>
+
+                <TextField 
+                    id="description" 
+                    variant='outlined' 
+                    label='Description' 
+                    className={styles.descInput} 
+                    multiline
+                    maxRows={5}
+                    value={description}
+                    onChange={(e) => {
+                        setDescription(e.target.value);
+                    }}/>
                 <Button type="submit" variant='contained' className={styles.createBtn}> Create </Button>
-            </form>
+            </Box>
         </div>
     )
 }
