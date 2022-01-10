@@ -3,25 +3,40 @@ import { Button, Divider } from "@mui/material";
 import { color } from "@mui/system";
 import Image from "next/image";
 import { useRouter } from "next/router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { sampleCarList } from "../../data/sample";
+import { getCarsList } from "../../services/data.service";
 import styles from '../../styles/CarList.module.scss';
 
 const CarList = () => {
     const router = useRouter();
+    const [isLoading, setLoading] = useState(true);
     const [skip, setSkip] = useState(0);
-    const data: any = [];
-
-    for(let i=0; i < 20; i++) {
-        data.push({
-            id: i+1,
-            ...sampleCarList[0]
-        });
-    }
+    const [carsList, setCarsList] = useState<any>(null);
 
     const onViewDetail = (e: any, carId: string) => {
         e.preventDefault();
         router.push(`/car/${carId}`)
+    }
+
+    useEffect(() => {
+        const fetchCarsList = async () => {
+            const response = await getCarsList('take=8&skip=5');
+            if (response?.status === 200 && response.data?.result) {
+                console.log('CarList:', response.data?.result)
+                setCarsList(response.data?.result);
+                setLoading(false);
+            }
+        }
+        fetchCarsList();
+    }, []);
+
+    if (isLoading) {
+        return (
+            <div>
+                Loading...
+            </div>
+        )
     }
 
     return (
@@ -32,13 +47,13 @@ const CarList = () => {
 
             <div className={styles.carListContainer}>
                 {
-                    data?.map((car: any, i: number) => {
+                    carsList?.map((car: any, i: number) => {
                         return (
                             <div className={styles.carContainer} key={car.id}>
                                 <div className={styles.previewImage}>
                                     <Image
                                         alt={car.name}
-                                        src={car.previewUrl}
+                                        src={car.preview_url}
                                         layout="responsive"
                                         height={200}
                                         width={300}
@@ -65,7 +80,7 @@ const CarList = () => {
                                         <Divider variant='middle' />
                                         <div >
                                             <span>Fuel Type</span>
-                                            <span>{car.fuelType}</span>
+                                            <span>{car.fuel_type}</span>
                                         </div>
                                     </div>
                                 </div>
@@ -78,7 +93,7 @@ const CarList = () => {
                 }
             </div>
         </div>
-    )
+    );
 }
 
 export default CarList;

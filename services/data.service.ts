@@ -68,6 +68,22 @@ export const getPresignedURL = async (token: string, query: any) => {
   }
 }
 
+export const getCarsList = async (query?: any) => {
+  try {
+    const result = await axios.get(`${host}/car${query ? `?${query}` : ''}`, {
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    });
+    return {
+      status: result.status,
+      data: result.data
+    };
+  } catch (error) {
+    console.log(error);
+  }
+}
+
 export const uploadToS3 = async (url: string, file: any, contentType: string)  =>  {
   try {
     return await axios.put(url, file, {

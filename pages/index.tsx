@@ -1,4 +1,5 @@
 import type { NextPage } from 'next';
+import Footer from '../components/footer';
 import CarList from '../components/home/CarList';
 import SearchArea from '../components/home/SearchArea';
 import styles from '../styles/Home.module.scss';
@@ -10,8 +11,9 @@ const Home: NextPage = () => {
         <div className={styles.carListContainer}>
             <CarList />
         </div>
+        <Footer />
     </div>
   )
 }
 
-export default Home
+export default Home;
