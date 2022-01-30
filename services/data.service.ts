@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const host = 'http://18.141.188.178:8500';
+const host = 'http://3.1.141.66:8500';
 
 export const testAPI = async () => {
   try {
