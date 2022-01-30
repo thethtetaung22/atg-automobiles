@@ -12,12 +12,13 @@ function MyApp({ Component, pageProps }: AppProps) {
     if (token) {
       setToken(token);
     }
-  });
+  }, []);
 
   return (
     <Layout token={token}>
        <Head>
         <title>ATG Automobiles</title>
+        <link rel='icon' href='/atglogo.png' />
       </Head>
       <Component {...pageProps} token={token}/>
     </Layout>

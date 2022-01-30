@@ -1,0 +1,76 @@
+@import '_colors';
+.carContainer {
+    display: flex;
+    width: 300px;
+    padding: 10px 10px 5px 10px;
+    // height: 40px;
+    flex-direction: column;
+
+    .editBtn {
+        display: flex;
+        justify-content: flex-end;
+        cursor: pointer;
+    }
+
+    .previewImage {
+        width: 100%;
+        height: auto;
+    }
+
+    .statusContainer {
+        width: 35%;
+        height: 20px;
+        align-self: flex-end;
+        background-color: $available-status;
+        justify-content: center;
+        display: flex;
+        
+        span {
+            font-size: 15px;
+            font-weight: 200;
+            color: white;
+            letter-spacing: 1.8px;
+        }
+    }
+
+    .detailsContainer {
+        display: flex;
+        padding-top: 10px;
+        flex-direction: column;
+
+        .carName {
+            font-family: Lato;
+            font-weight: bold;
+            font-size: 17px;
+            padding-left: 5px;
+        }
+
+        .fullDetails {
+            display: flex;
+            flex-direction: column;
+            padding-top: 10px;
+            
+
+            div {
+                display: flex;
+                justify-content: space-between;
+                padding: 0 20px;
+                font-family: Lato;
+                font-weight: 550;
+                font-size: 14px;
+                line-height: 25px;
+            }
+        }
+    }
+
+    .viewDetailContainer {
+        display: flex;
+        justify-content: flex-end;
+        padding: 10px 0;
+        
+        .viewDetailBtn {
+            background-color: $button-background;
+            border-radius: 40px;
+        }
+    }
+}

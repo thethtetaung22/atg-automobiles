@@ -1,0 +1,123 @@
+.container {
+    display: flex;
+    flex: none;
+    height: 580px;
+    margin-top: -80px;
+    padding-top: 50px;
+    background: rgb(121,9,14);
+    background: linear-gradient(90deg, rgba(41, 14, 14, 0.452) 0%, rgb(143, 14, 14) 100%, rgb(224, 39, 39) 100%);
+    position: relative;
+
+    .leftContainer {
+        display: flex;
+        flex: 1;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        color: white;
+        margin-top: -40px;
+
+        @media screen and (max-width: 900px) {
+            width: 100%;
+            flex: 1 1 auto;
+            position: absolute;
+            align-self: center;
+            z-index: 10;
+            margin-top: 25px;
+            padding: 120px 0;
+            justify-self: center;
+            background: #000000;
+            color: white;
+            opacity: 0.8;
+        }
+
+        .text {
+            font-weight: bolder;
+            font-size: 50px;
+            letter-spacing: 6px;
+            font-family: 'Arial Narrow Bold';
+
+            @media screen and (max-width: 1000px) {
+                font-size: 40px;
+                letter-spacing: 3px;
+            }
+
+            @media screen and (max-width: 400px) {
+                font-size: 30px;
+                letter-spacing: 2px;
+            }
+        }
+
+        .subtext {
+            font-size: 20px;
+            letter-spacing: 2px;
+
+            @media screen and (max-width: 1000px) {
+                font-size: 12px;
+                letter-spacing: 1px;
+            }
+
+            @media screen and (max-width: 400px) {
+                font-size: 10px;
+                letter-spacing: 1px;
+            }
+        }
+    }
+
+    .rightContainer {
+        display: flex;
+        flex: 1;
+        justify-content: center;
+        align-items: center;
+        position: relative;
+        @media screen and (max-width: 1000px) {
+            justify-content: flex-end;
+        }
+        .imageContainer {
+            display: block;
+            position: absolute;
+            width: 500px;
+            height: 300px;
+            transition: 0.8s all ease;
+            animation: fadeIn 5s;
+            -webkit-animation: fadeIn 5s;
+            -moz-animation: fadeIn 5s;
+            -o-animation: fadeIn 5s;
+            -ms-animation: fadeIn 5s;
+            @keyframes fadeIn {
+            0% {opacity:0;}
+            100% {opacity:1;}
+            }
+            
+            @-moz-keyframes fadeIn {
+            0% {opacity:0;}
+            100% {opacity:1;}
+            }
+            
+            @-webkit-keyframes fadeIn {
+            0% {opacity:0;}
+            100% {opacity:1;}
+            }
+            
+            @-o-keyframes fadeIn {
+            0% {opacity:0;}
+            100% {opacity:1;}
+            }
+            
+            @-ms-keyframes fadeIn {
+            0% {opacity:0;}
+            100% {opacity:1;}
+            }
+
+            @media screen and (max-width: 1000px) {
+                width: 400px;
+                height: 200px;
+            }
+
+            @media screen and (max-width: 400px) {
+                width: 250px;
+                height: 150px;
+            }
+        }
+    }
+}

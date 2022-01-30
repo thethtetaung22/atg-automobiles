@@ -1,0 +1,16 @@
+.container {
+    display: flex;
+    flex: 1 1 auto;
+    flex-direction: column;
+    min-width: 250px;
+    overflow: auto;
+    background-color: #ececec;
+
+    .carListContainer {
+        padding: 20px 0px;
+    }
+
+    .footerContainer {
+        height: 50px;
+    }
+}

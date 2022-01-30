@@ -1,7 +1,7 @@
 .container {
     display: flex;
     flex: none;
-    height: 50vh;
+    height: 500px;
     position: relative;
     background-image: url('/main_bg.png');
     background-size: cover;
@@ -9,112 +9,83 @@
     justify-content: center;
     align-items: center;
 
-    .bodyBg {
-        display: flex;
-        flex-direction: column;
-        width: 60%;
-        background-color: black;
-        opacity: 0.7;
-        border-radius: 15px;
-        height: 80%;
-    }
-
     .body {
         display: flex;
+        // flex: 1 1 auto;
         flex-direction: column;
         align-items: center;
-        position: absolute;
-        margin-top: -20px;
+        justify-content: center;
 
-        .title {
-            color: white;
-            font-weight: bold;
-            font-size: 40px;
+        .bodyBg {
+            width: 60%;
+            height: 80%;
+            background-color: black;
+            opacity: 0.7;
+            position: absolute;
+            border-radius: 15px;
+            z-index: 1;
+    
+            @media screen and (max-width: 1100px) {
+                width: 80%;
+            }
+
+            @media screen and (max-width: 900px) {
+                width: 90%;
+            }
+
+            @media screen and (max-width: 700px) {
+                width: auto;
+                height: auto;
+                top: 20px;
+                right: 10px;
+                bottom: 20px;
+                left: 10px;
+            }
         }
 
         .inputArea {
             display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding-top: 20px;
+            z-index: 2;
+            
+            @media screen and (max-width: 700px) {
+                flex-direction: column;
+            }
 
             .inputContainer {
                 display: flex;
+                flex-direction: column;
 
                 .input {
-                    display: flex;
-                    flex-wrap: wrap;
                     width: 300px;
-                    height: 50px;
-                    border-radius: 10px;
                     background-color: white;
-                    margin: 0 10px;
-                    opacity: 1;
-                    color: black;
-                    font-weight: bold;
+                    border-radius: 5px;
+                    padding: 5px 10px;
+                    margin: 5px 10px;
 
-                    :focus {
-                        outline: none;
-                        width: 220px;
-                        transition: width 200ms ease-out;
+                    @media screen and (max-width: 300px) {
+                        width: 200px;
                     }
                 }
             }
-
-            .searchButton {
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                margin-top: 20px;
-                width: 300px;
-                height: 50px;
-                font-size: 20px;
-                font-weight: 600;
-                background-color: #C60021;
-                color: white;
-                border-radius: 20px;
-                opacity: 1;
-                fill-opacity: 1;
-            }
-            
         }
-    }
-}
-
-@media screen and (max-width: 1000px) {
-
-    .container {
-        margin-left: -40px;
-        
-        .bodyBg {
-            width: 80%;
-        }
-
-        .body {
-            margin-left: 40px;
+        .searchButton {
             display: flex;
-            flex-direction: column;
-
-            .inputArea {
-
-                .inputContainer {
-                    flex-direction: column;
-                    
-                    .input {
-                        margin-top: 20px;
-                    }
-                }
+            flex: none;
+            justify-content: center;
+            align-items: center;
+            margin-top: 20px;
+            width: 300px;
+            font-size: 15px;
+            font-weight: 400;
+            background-color: #C60021;
+            color: white;
+            border-radius: 10px;
+            fill-opacity: 1;
+            z-index: 2;
+            
+            @media screen and (max-width: 300px) {
+                width: 200px;
             }
-        }
-    }
-}
-
-@media screen and (max-width: 700px) {
-    .container {
-        height: 50vh;
-
-        .bodyBg {
-            margin-left: 40px;
         }
     }
 }

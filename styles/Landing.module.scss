@@ -1,0 +1,10 @@
+@import 'colors';
+
+.container {
+    display: flex;
+    flex: 1 1 auto;
+    flex-direction: column;
+    overflow: auto;
+    background-color: #ececec;
+    scroll-behavior: smooth;
+}

@@ -1,0 +1,66 @@
+@import 'colors';
+
+.container {
+    height: 80px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 1rem;
+    position: sticky;
+    top:0;
+    z-index: 10;
+    background: transparent;
+    transition: 0.8s all ease;
+    padding: 0 40px;
+
+    .logo {
+        height: max-content;
+    }
+
+    .menus {
+        display: flex;
+
+        div {
+            display: flex;
+            width: max-content;
+            height: 40px;
+            justify-content: center;
+            align-items: center;
+            margin-right: 20px;
+            padding: 10px 20px;
+            background-color: #C60021;
+            color: white;
+            border-radius: 20px;
+        }
+
+        .signOutBtn {
+            cursor: pointer;
+        }
+    }
+
+    .sideNavMenu {
+        display: none;
+        font-size: xx-large;
+    }
+
+    .sideNavContainer {
+        position: absolute;
+        width: 80%;
+        right: 0;
+        z-index: 10;
+        background-color: #C60021;
+    }
+}
+
+@media screen and (max-width: 600px) {
+    .container {
+        padding: 0 40px 0 10px;
+        .menus {
+            display: none;
+        }
+
+        .sideNavMenu {
+            display: flex;
+        }
+    }
+}

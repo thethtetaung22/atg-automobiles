@@ -1,0 +1,52 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    overflow: auto;
+    background-color: #e9e9e9;
+
+    .body {
+        display: flex;
+        flex-direction: column;
+        height: max-content;
+        align-items: center;
+        width: 100%;
+
+        .title {
+            font-family: Georgia, 'Times New Roman', Times, serif;
+            font-size: 30px;
+            font-weight: bold;
+            padding-top: 20px;
+            padding-left: 20px;
+        }
+    
+        .divider {
+            height: 2px;
+            width: 90%;
+            background-color: red;
+            margin-top: 10px;
+            margin-bottom: 10px;
+        }
+
+        .carsContainer {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            padding-bottom: 20px;
+
+            & > * {
+                margin: 5px;
+            }
+        }
+
+        .noResultContainer {
+            display: flex;
+            height: 60vh;
+            justify-content: center;
+            align-items: center;
+
+            span {
+                color: #5e5e5e;
+            }
+        }
+    }
+}

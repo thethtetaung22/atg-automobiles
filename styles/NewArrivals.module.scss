@@ -1,0 +1,47 @@
+.container {
+    display: flex;
+    flex: none;
+    flex-direction: column;
+    min-height: 500px;
+    background: white;
+    padding: 20px 40px;
+    justify-content: center;
+    align-items: center;
+    font-family: Roboto;
+
+    .title {
+        font-family: Georgia, 'Times New Roman', Times, serif;
+        font-size: 30px;
+        font-weight: bold;
+    }
+
+    .divider {
+        height: 2px;
+        background-color: red;
+        width: 80%;
+        margin-top: 10px;
+    }
+
+    .carsContainer {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        align-items: center;
+        padding-top: 20px;
+
+        .cardContainer {
+            padding: 10px 20px;
+        }
+    }
+
+    .seeAllButton {
+        padding: 10px;
+
+        button {
+            margin-top: 10px;
+            background: #C60021;
+            padding: 8px 20px;
+            // border-radius: 20px;
+        }
+    }
+}

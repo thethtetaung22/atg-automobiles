@@ -1,96 +1,45 @@
-import { ArrowForwardIos } from "@mui/icons-material";
+import { ArrowBackIos, ArrowForwardIos } from "@mui/icons-material";
 import { Button, Divider } from "@mui/material";
-import { color } from "@mui/system";
-import Image from "next/image";
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
-import { sampleCarList } from "../../data/sample";
-import { getCarsList } from "../../services/data.service";
 import styles from '../../styles/CarList.module.scss';
+import CarCard from "../CarCard";
 
-const CarList = () => {
+const CarList = ({ token, cars, haveMore }: any) => {
     const router = useRouter();
-    const [isLoading, setLoading] = useState(true);
-    const [skip, setSkip] = useState(0);
-    const [carsList, setCarsList] = useState<any>(null);
-
-    const onViewDetail = (e: any, carId: string) => {
-        e.preventDefault();
-        router.push(`/car/${carId}`)
-    }
-
-    useEffect(() => {
-        const fetchCarsList = async () => {
-            const response = await getCarsList('take=8&skip=5');
-            if (response?.status === 200 && response.data?.result) {
-                console.log('CarList:', response.data?.result)
-                setCarsList(response.data?.result);
-                setLoading(false);
-            }
+    const pageNumber = Number(router?.query?.page);
+    
+    const handlePaginator = async (action: string) => {
+        if (action === 'next') {
+            router.push(`/cars/${Number(pageNumber)+1}`)
+        } else {
+            router.back();
         }
-        fetchCarsList();
-    }, []);
-
-    if (isLoading) {
-        return (
-            <div>
-                Loading...
-            </div>
-        )
     }
 
     return (
         <div className={styles.container}>
-            <span className={styles.title}> New Arrivals </span>
+
+            <span className={styles.title}> ATG Automobiles </span>
 
             <Divider variant='middle' className={styles.divider} />
 
             <div className={styles.carListContainer}>
                 {
-                    carsList?.map((car: any, i: number) => {
+                    cars?.map((car: any, i: number) => {
                         return (
-                            <div className={styles.carContainer} key={car.id}>
-                                <div className={styles.previewImage}>
-                                    <Image
-                                        alt={car.name}
-                                        src={car.preview_url}
-                                        layout="responsive"
-                                        height={200}
-                                        width={300}
-                                        priority
-                                    />
-                                </div>
-                                <div className={styles.statusContainer} style={{backgroundColor: i ===2 || i==5 ? '#C60021': ''}}>
-                                    <span>{i ===2 || i==5 ? 'Sold Out' : 'Available'}</span>
-                                </div>
-
-                                <div className={styles.detailsContainer}>
-                                    <span className={styles.carName}> {car.name} </span>
-
-                                    <div className={styles.fullDetails}>
-                                        <div >
-                                            <span>Mileage</span>
-                                            <span>{car.mileage || 'N/A'} km</span>
-                                        </div>
-                                        <Divider variant='middle' />
-                                        <div >
-                                            <span>Type</span>
-                                            <span>{car.type}</span>
-                                        </div>
-                                        <Divider variant='middle' />
-                                        <div >
-                                            <span>Fuel Type</span>
-                                            <span>{car.fuel_type}</span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className={styles.viewDetailContainer}>
-                                    <Button className={styles.viewDetailBtn} variant="contained" endIcon={<ArrowForwardIos/>} onClick={e => onViewDetail(e, car.id)}> View Details </Button>
-                                </div>
-                            </div>
+                            <CarCard  token={token} car={car} key={i}/>
                         )
                     })
                 }
+            </div>
+
+            <div className={styles.paginator}>
+                <Button variant="contained" className={styles.button} startIcon={<ArrowBackIos />} onClick={() => handlePaginator('previous')} disabled={pageNumber <= 1} style={{backgroundColor: pageNumber <= 1 ? 'gray' : ''}}>
+                    Previous
+                </Button>
+                <Button variant="contained" className={styles.button} endIcon={<ArrowForwardIos />} onClick={() => handlePaginator('next')} disabled={!haveMore} style={{backgroundColor: haveMore ? '' : 'gray'}}>
+                    Next
+                </Button>
             </div>
         </div>
     );

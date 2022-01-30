@@ -32,17 +32,22 @@ const NavBar = ({ toggle, isLoggedIn }: any) => {
                     </Link>
                 </div>
                 <div className={styles.link}>
+                    <Link href="/cars/1">
+                        <a>Showroom</a>
+                    </Link>
+                </div>
+                <div className={styles.link}>
                     <Link href="/about">
                         <a>About Us</a>
                     </Link>
                 </div>
-                {
+                {/* {
                     !isLoggedIn && <div className={styles.link}>
                         <Link href="/login">
                             <a>Login</a>
                         </Link>
                     </div>
-                }
+                } */}
                 {
                     isLoggedIn && <div className={styles.link}>
                         <Link href="/car/create">

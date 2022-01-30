@@ -33,14 +33,17 @@ const SideNav = ({ isOpen, toggle, isLoggedIn }: any) => {
                     <div onClick={() => handleRouter('/')} style={{color: isCurrentRoute('/') ? '#fc3636':''}}>
                         <a>Home</a>
                     </div>
+                    <div onClick={() => handleRouter('/cars/1')} style={{color: router.route !== '/' && router.route !== '/about' ? '#fc3636':''}}>
+                        <a>Showroom</a>
+                    </div>
                     <div onClick={() => handleRouter('/about')} style={{color: isCurrentRoute('/about') ? '#fc3636':''}}>
                         <a>About Us</a>
                     </div>
-                    {
+                    {/* {
                         !isLoggedIn && <div onClick={() => handleRouter('/login')} style={{color: isCurrentRoute('/login') ? '#fc3636':''}}>
                             <a>Login</a>
                         </div>
-                    }
+                    } */}
                     {
                         isLoggedIn && <div onClick={() => handleRouter('/car/create')} style={{color: isCurrentRoute('/car/create') ? '#fc3636':''}}>
                             <a>Create</a>

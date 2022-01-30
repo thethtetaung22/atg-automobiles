@@ -1,7 +1,6 @@
 import { AddCircleRounded, CameraAltOutlined, CloseRounded } from '@mui/icons-material';
 import {
     Alert,
-    AlertTitle,
     Backdrop,
     Button,
     CircularProgress,
@@ -12,13 +11,12 @@ import {
     FormControl,
     InputLabel,
     MenuItem,
-    OutlinedInput,
     Select,
     Slide,
     Snackbar,
     TextField
 } from '@mui/material';
-import { DatePicker, DesktopDatePicker, LocalizationProvider } from '@mui/lab';
+import { DatePicker, LocalizationProvider } from '@mui/lab';
 import AdapterDateFns from '@mui/lab/AdapterDateFns';
 import Image from 'next/image';
 import React, { useCallback, useEffect, useState } from 'react';
@@ -32,14 +30,14 @@ import {
     keyTypes,
     fuelTypes
 } from '../data/constants';
-import { createNewCarApi, getPresignedURL, uploadToS3 } from '../services/data.service';
+import { createNewCarApi, getPresignedURL, updateCarApi, uploadToS3 } from '../services/data.service';
 import styles from '../styles/CreateCar.module.scss';
 import { validateToken } from '../services/data.service';
 import { Box } from '@mui/system';
 
-const CreateCar = () => {
+const CreateCar = ({ token, carDetails }: any) => {
     const router = useRouter();
-
+    
     // Flags
     const [openAlert, setOpenAlert] = useState<boolean>(false);
     const [showLoading, setShowLoading] = useState<boolean>(false);
@@ -96,8 +94,7 @@ const CreateCar = () => {
             setShowLoading(true);
         }
         for (let i = 0; i < acceptedFiles.length; i++) {
-            const token = window?.sessionStorage.getItem('token');
-            console.log(token)
+
             if (token) {
                 const query = {
                     name: acceptedFiles[i].name,
@@ -105,10 +102,9 @@ const CreateCar = () => {
                 }
 
                 const result = await getPresignedURL(token, query);
-                console.log(result);
+
                 if (result?.status === 200 && result.result?.signedRequest) {
                     const uploadResult = await uploadToS3(result.result.signedRequest, acceptedFiles[i], query.mimeType);
-                    console.log(uploadResult);
                     if (uploadResult?.status === 200) {
                         if (isPreview) {
                             setPreviewUrl(result.result.url);
@@ -116,7 +112,6 @@ const CreateCar = () => {
                             const images = moreImages;
                             images.push(result.result.url)
                             setMoreImages(images);
-                            console.log(moreImages);
                         }
                     }
                     // reader.readAsArrayBuffer(acceptedFiles[i])
@@ -174,7 +169,7 @@ const CreateCar = () => {
         return <Dialog open={openSuccessDialog} fullWidth>
         <DialogTitle>Success!</DialogTitle>
         <DialogContent>
-            <span>New car is created successful!</span>
+            <span>{ carDetails ? 'Car details updated successfully!' : 'New car is created successfully!' }</span>
         </DialogContent>
         <DialogActions>
             <Button onClick={() => {
@@ -236,8 +231,8 @@ const CreateCar = () => {
                 preview_url: previewUrl,
                 more_image_urls: moreImages,
                 brand,
-                model: model?.getFullYear(),
-                type: type.toLowerCase() === 'other', customType: type,
+                model: new Date(model)?.getFullYear(),
+                type: type.toLowerCase() === 'other' ? customType : type,
                 engine_power: enginePower,
                 steering_position: steeringPosition,
                 transmission: transmission,
@@ -249,7 +244,6 @@ const CreateCar = () => {
                 description: description
             };
     
-            console.log('req value:', reqBody);
             const token = window?.sessionStorage.getItem('token');
             if (token) {
                 setShowLoading(true);
@@ -257,9 +251,13 @@ const CreateCar = () => {
                 setShowLoading(false);
                 if (isValid) {
                     setShowLoading(true);
-                    const result = await createNewCarApi(token, reqBody);
-                    console.log(result);
-                    if (result.status === 201) {
+                    let result: any;
+                    if (carDetails) {
+                        result = await updateCarApi(token, carDetails.id, reqBody);
+                    } else {
+                        result = await createNewCarApi(token, reqBody);
+                    }
+                    if (result.status === 201 || result.status === 200) {
                         setShowLoading(false);
                         setOpenSuccessDialog(true);
                     }
@@ -268,10 +266,46 @@ const CreateCar = () => {
         }
     }
 
-
     useEffect(() => {
-        const token = window?.sessionStorage.getItem('token');
-        checkToken(token);
+        if (token) {
+            checkToken(token);
+        }
+        if(carDetails) {
+            setPreviewUrl(carDetails.preview_url);
+            setMoreImages(carDetails.more_image_urls);
+            setName(carDetails.name);
+            setBrand(carDetails.brand);
+            setColor(carDetails.color);
+            setModel(new Date().setFullYear(carDetails.model));
+            setEngineCapacity(carDetails.engine_capacity);
+            setEnginerPower(carDetails.engine_power);
+            setFuelType(carDetails.fuel_type);
+            setMileage(carDetails.mileage);
+            setDescription(carDetails.description);
+            setTransmission(carDetails.transmission);
+            setSteeringPosition(carDetails.steering_position);
+    
+            if (carTypes.includes(carDetails.type)) {
+                setType(carDetails.type);
+            } else {
+                setType('Other');
+                setCustomType(carDetails.type);
+            }
+
+            if (keyTypes.includes(carDetails.key)) {
+                setKeyType(carDetails.key);
+            } else {
+                setKeyType('Other');
+                setCustomKeyType(carDetails.key);
+            }
+
+            if (colors.includes(carDetails.color)) {
+                setColor(carDetails.color);
+            } else {
+                setColor('Other');
+                setCustomColor(carDetails.color);
+            }
+        }
     }, []);
 
     return (
@@ -531,8 +565,6 @@ const CreateCar = () => {
                     value={engineCapacity}
                     onChange={(e) => {
                         const capacity = parseInt(e.target.value);
-                        console.log(capacity);
-                        console.log(engineCapacity)
                         if (capacity >= 0) {
                             setEngineCapacity(capacity);
                         } else {
@@ -583,7 +615,7 @@ const CreateCar = () => {
                     onChange={(e) => {
                         setDescription(e.target.value);
                     }}/>
-                <Button type="submit" variant='contained' className={styles.createBtn}> Create </Button>
+                <Button type="submit" variant='contained' className={styles.createBtn}> {carDetails ? 'Update' : 'Create'} </Button>
             </Box>
         </div>
     )
