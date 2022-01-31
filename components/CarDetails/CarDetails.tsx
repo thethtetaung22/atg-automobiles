@@ -1,5 +1,5 @@
-import { EditRounded } from '@mui/icons-material';
-import { Button, Divider } from '@mui/material';
+import { EditRounded, MessageOutlined, Phone } from '@mui/icons-material';
+import { Button, Divider, IconButton } from '@mui/material';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
@@ -10,6 +10,7 @@ import AddressFooter from '../footer/AddressFooter';
 const CarDetails = ({ carDetails }: any) => {
     const router = useRouter();
     const windowDimensions = useWindowSize();
+    const isMobile = windowDimensions.width <= 700;
 
     const shimmer = (w: any, h: any) => `
         <svg width="${w}" height="${h}" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
@@ -57,8 +58,23 @@ const CarDetails = ({ carDetails }: any) => {
                 }
                 <div className={styles.titleContainer}>
                     <span className={styles.title}>{carDetails.name} ( {carDetails.model} )</span>
-                    <div className={styles.status} style={{backgroundColor: carDetails.is_sold ? 'red' : ''}}>
-                        <span>{ carDetails.is_sold ? 'Sold Out' : 'Available' }</span>
+
+                    <div style={{display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
+                        <div className={styles.button}>
+                            <a href="tel:+959777555881">
+                                <Phone fontSize={isMobile ? 'medium' : 'small'} /> 
+                                <span style={{paddingLeft: '5px', display: isMobile ? 'none' : ''}}>Call Us</span>
+                            </a>
+                        </div>
+                        <div className={styles.button}>
+                            <a href="sms://+959777555881">
+                                <MessageOutlined fontSize={isMobile ? 'medium' : 'small'} /> 
+                                <span style={{paddingLeft: '5px', display: isMobile? 'none': ''}}>Send Message</span>
+                            </a>
+                        </div>
+                        <div className={styles.status} style={{backgroundColor: carDetails.is_sold ? 'red' : ''}}>
+                            <span>{ carDetails.is_sold ? 'Sold Out' : 'Available' }</span>
+                        </div>
                     </div>
                 </div>
                     <Divider variant='middle' className={styles.divider} />

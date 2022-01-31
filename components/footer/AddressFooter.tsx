@@ -14,17 +14,8 @@ const AddressFooter = () => {
                     <span>61(A), Between 116 x 117 st,</span>
                     <span>Mandalay, Myanmar.</span>
                     <span>contact@atgautomobiles.com</span>
-                    <span>09 777 555 881</span>
+                    <span><a href="tel:+959777555881">09 777 555 881</a></span>
                 </div>
-
-                {/* <div className={styles.linksContainer}>
-                    <Link href='/'>
-                        <li>Home</li>
-                    </Link>
-                    <Link href='/about'>
-                        <li>About Us</li>
-                    </Link>
-                </div> */}
                     
                 <div className={styles.externalLinksContainer}>
                     <div>Follow Us On : </div>

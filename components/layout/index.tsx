@@ -16,10 +16,7 @@ const Layout = ({ children, token }: any) => {
     return (
         <div className={styles.container}>
             <SideNav isOpen={isOpen} toggle={toggleNav} isLoggedIn={!!token}/>
-            {
-                router.route !== '/' &&
-                <NavBar toggle={toggleNav} isLoggedIn={!!token}/>
-            }
+            <NavBar toggle={toggleNav} isLoggedIn={!!token}/>
             { children }
         </div>
     )
