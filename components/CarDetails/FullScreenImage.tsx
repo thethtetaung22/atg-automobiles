@@ -8,11 +8,11 @@ import Image from 'next/image';
 import styles from '../../styles/FullScreenImage.module.scss';
 import { shimmer, toBase64 } from '../common';
 import { useDrag, useGesture } from 'react-use-gesture';
-import { animated, useSpring } from 'react-spring';
+import { animated, to, useSpring } from 'react-spring';
 
 const FullScreenImage = ({ images, toggle, index }: any) => {
     const [previewIndex, setPreviewIndex] = useState(index);
-    const crop = useSpring({ x: 0, y: 0, scale: 1 });
+    const crop = useSpring({ x: 0, y: 0, scale: 1, zoom: 0 });
     const imageRef: any = useRef();
 
     const handleBack = (e: any) => {
@@ -31,13 +31,16 @@ const FullScreenImage = ({ images, toggle, index }: any) => {
     }
 
     const bindGesture = useGesture({
-        onDrag: ({ offset: [dx, dy] }) => {
+        onDrag: ({ active, offset: [dx, dy] }) => {
             crop.x.set(dx);
             crop.y.set(dy);
+            crop.scale.set(active ? 1 : 1.1)
         },
-        onPinch: ({ offset: [d] }) => {
-            crop.scale.set(d / 200);
+        onPinch: ({ offset: [d, a] }) => {
+            crop.zoom.set(d / 200);
         },
+    }, {
+        eventOptions: { passive: false }
     });
 
     return <div className={styles.container}>
@@ -54,7 +57,8 @@ const FullScreenImage = ({ images, toggle, index }: any) => {
             <animated.div {...bindGesture()} style={{
                 y: crop.y,
                 x: crop.x,
-                scale: crop.scale
+                scale: to([crop.scale, crop.zoom], (s, z) => s + z),
+                transform: 'perspective(600px)'
             }}>
                 <img
                     alt='preview'

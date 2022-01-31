@@ -36,12 +36,13 @@
             z-index: 40;
         }
 
+        
         .image {
             display: block;
-            width: 100%;
+            width: 90%;
             height: auto;
+            background-color: blue;
             z-index: 30;
-            overflow: hidden;
 
             @media screen and (max-width: 800px) {
                 width: 100%;
