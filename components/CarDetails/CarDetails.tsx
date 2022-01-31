@@ -1,38 +1,34 @@
 import { EditRounded, MessageOutlined, Phone } from '@mui/icons-material';
-import { Button, Divider, IconButton } from '@mui/material';
+import { Button, Divider } from '@mui/material';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import useWindowSize from '../../hooks/useWindowSize';
 import styles from '../../styles/Car.module.scss';
+import { shimmer, toBase64 } from '../common';
 import AddressFooter from '../footer/AddressFooter';
+import FullScreenImage from './FullScreenImage';
 
 const CarDetails = ({ carDetails }: any) => {
     const router = useRouter();
     const windowDimensions = useWindowSize();
     const isMobile = windowDimensions.width <= 700;
-
-    const shimmer = (w: any, h: any) => `
-        <svg width="${w}" height="${h}" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-            <defs>
-            <linearGradient id="g">
-            <stop stop-color="#333" offset="20%" />
-            <stop stop-color="#222" offset="50%" />
-                <stop stop-color="#333" offset="70%" />
-                </linearGradient>
-            </defs>
-            <rect width="${w}" height="${h}" fill="#333" />
-            <rect id="r" width="${w}" height="${h}" fill="url(#g)" />
-            <animate xlink:href="#r" attributeName="x" from="-${w}" to="${w}" dur="1s" repeatCount="indefinite"  />
-        </svg>
-    `;
-
-    const toBase64 = (str: any) =>
-        typeof window === 'undefined'
-            ? Buffer.from(str).toString('base64')
-            : window.btoa(str);
-
     const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const [isOpenFullView, setOpenFullView] = useState(false);
+    const [fullViewImages, setFullViewImages] = useState<any>(null);
+    const [fullViewIndex, setFullViewIndex] = useState(0);
+
+    const handleOnImageClick = (e: any, i: number) => {
+        e.preventDefault();
+        const images = [carDetails.preview_url, ...carDetails.more_image_urls];
+        setFullViewImages(images);
+        setOpenFullView(true);
+        setFullViewIndex(i)
+    }
+
+    const closeFullView = () => {
+        setOpenFullView(false);
+    }
 
     useEffect(() => {
         const token = window?.sessionStorage.getItem('token');
@@ -44,6 +40,10 @@ const CarDetails = ({ carDetails }: any) => {
     return (
         <div>
             <div className={styles.container}>
+                {
+                    isOpenFullView &&
+                    <FullScreenImage images={fullViewImages} index={fullViewIndex} toggle={closeFullView}/> 
+                }
                 {
                     isLoggedIn &&
                     <div className={styles.editContainer}>
@@ -89,14 +89,15 @@ const CarDetails = ({ carDetails }: any) => {
                             layout={'responsive'}
                             objectFit='contain'
                             placeholder='blur'
-                            blurDataURL={`data:image/svg+xml;base64,${toBase64(shimmer(700, 475))}`}/>
-                                
-                        <div className={styles.moreImagesContainer}>
+                            blurDataURL={`data:image/svg+xml;base64,${toBase64(shimmer(700, 475))}`}
+                            onClick={(e) => handleOnImageClick(e, 0)}
+                        />
+                        <div className={styles.moreImagesContainer} style={{display: isMobile && carDetails.more_image_urls?.length === 0 ? 'none' : '' }}>
                             {
                                 carDetails.more_image_urls?.map((url: string, i: number) => {
-                                    return <div className={styles.imageContainer} key={'img-' + i}>
+                                    return <div className={styles.imageContainer} key={'img-' + i} onClick={(e) => handleOnImageClick(e, i+1)}>
                                         <Image
-                                            src={carDetails.preview_url}
+                                            src={url}
                                             width={110}
                                             height={90}
                                             alt='preview'

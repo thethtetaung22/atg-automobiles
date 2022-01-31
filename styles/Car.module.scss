@@ -9,6 +9,39 @@
     @media screen and (max-width: 1650px) {
         padding: 20px;
     }
+
+    .fullViewDialog {
+        background-color: yellow;
+
+        .container {
+            display: flex;
+            height: 100vh;
+            flex: 1 1 auto;
+            flex-direction: column;
+            
+            .closeButton {
+                display: flex;
+                flex: initial;
+                align-self: flex-end;
+            }
+        
+            .body {
+                display: flex;
+                flex: 1 1 auto;
+                // background-color: khaki;
+                justify-content: space-between;
+                padding: 10px 20px;
+                align-items: center;
+        
+                .image {
+                    display: block;
+                    background-color: lavender;
+                    width: 90%;
+                }
+            }
+        }
+    }
+
     .editContainer {
         display: flex;
         justify-content: flex-end;

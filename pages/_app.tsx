@@ -19,6 +19,7 @@ function MyApp({ Component, pageProps }: AppProps) {
        <Head>
         <title>ATG Automobiles</title>
         <link rel='icon' href='/atglogo.png' />
+        <meta name="viewport" content="width=device-width, user-scalable=no" />
       </Head>
       <Component {...pageProps} token={token}/>
     </Layout>

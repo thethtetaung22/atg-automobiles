@@ -1,0 +1,51 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    background-color: rgba(0, 0, 0, 0.432);
+    position: absolute;
+    z-index: 10;
+    top: 0px;
+    right: 0px;
+    bottom: 0px;
+    left: 0px;
+    
+    .closeButton {
+        display: flex;
+        flex: initial;
+        align-self: flex-end;
+    }
+
+    .body {
+        display: flex;
+        flex: 1 1 auto;
+        justify-content: space-between;
+        padding: 10px 20px;
+        align-items: center;
+
+        @media screen and (max-width: 800px) {
+            justify-content: center;
+        }
+
+        .iconNextBtn {
+            display: flex;    
+            z-index: 40;
+        }
+
+        .iconBackBtn {
+            display: flex;    
+            z-index: 40;
+        }
+
+        .image {
+            display: block;
+            width: 100%;
+            height: auto;
+            z-index: 30;
+            overflow: hidden;
+
+            @media screen and (max-width: 800px) {
+                width: 100%;
+            }
+        }
+    }
+}
