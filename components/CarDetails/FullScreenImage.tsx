@@ -62,6 +62,7 @@ const FullScreenImage = ({ images, toggle, index }: any) => {
             }}>
                 <img
                     alt='preview'
+                    // loading='lazy'
                     src={images[previewIndex]}
                     className={styles.image}
                     style={{

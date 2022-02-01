@@ -10,15 +10,25 @@ const Login = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
-    const onSubmit = async () => {
+    const onSubmit = () => {
         setLoading(true);
-        const result = await login(email, password);
-        if (result?.data?.token) {
-            window?.sessionStorage.setItem('token', result?.data?.token);
-            router.replace('/').then(() => {
-                // router.reload();
-            });
-        }
+        fetch('/api/login', {
+            method: 'POST',
+            body: JSON.stringify({ email, password }),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }).then(resp => resp.json())
+        .then(data => {
+            if (data?.token) {
+                setLoading(false);
+                window?.sessionStorage.setItem('token', data?.token);
+                router.replace('/').then(() => {
+                    router.reload();
+                });
+            }
+        });
+        
     }
 
     return (
