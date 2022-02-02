@@ -7,7 +7,7 @@ import { getCarsList } from 'services/data.service';
 import styles from 'styles/Landing.module.scss';
 
 const Landing: NextPage = ({ token, cars }: any) => {
-
+  console.log(cars)
   return (
     <div className={styles.container}>
         <Banner />

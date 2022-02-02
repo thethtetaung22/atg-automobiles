@@ -61,7 +61,9 @@ const NewArrivals = ({ token, cars }: any) => {
     <Divider variant='middle' className={styles.divider} />
 
     <div className={styles.carsContainer}>
-      <animated.div
+      {
+        cars?.length > 0 ?
+        <animated.div
           style={{ ...rest, width: size, height: size }}
           className={styles.cardContainer}>
           {
@@ -74,7 +76,17 @@ const NewArrivals = ({ token, cars }: any) => {
               </animated.div>
             ))
           }
-        </animated.div>
+        </animated.div> :
+        <div style={{
+          color:'gray',
+          fontSize: '30px',
+          height: '200px',
+          textAlign:'center',
+          verticalAlign: 'center'
+        }}>
+          No Data!
+        </div>
+      }
     </div>
     {
       router.route === '/' &&
