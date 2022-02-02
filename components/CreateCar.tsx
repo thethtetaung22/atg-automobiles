@@ -29,10 +29,9 @@ import {
     transmissions,
     keyTypes,
     fuelTypes
-} from '../data/constants';
-import { createNewCarApi, getPresignedURL, updateCarApi, uploadToS3 } from '../services/data.service';
-import styles from '../styles/CreateCar.module.scss';
-import { validateToken } from '../services/data.service';
+} from 'data/constants';
+import { createNewCarApi, getPresignedURL, updateCarApi, uploadToS3 } from 'services/data.service';
+import styles from 'styles/CreateCar.module.scss';
 import { Box } from '@mui/system';
 
 const CreateCar = ({ token, carDetails }: any) => {
@@ -78,10 +77,15 @@ const CreateCar = ({ token, carDetails }: any) => {
         });
     }
 
-    const checkToken = async (token: string | null) => {
+    const checkToken = (token: string | null) => {
         let isValid: any = true;
         if (token) {
-            isValid = await validateToken(token);
+            fetch(`/api/validateToken/${token}`)
+                .then(res => res.json())
+                .then(data => {
+                    console.log(data);
+                    isValid = data?.isValid;
+                });
         }
         if (!token || !isValid) {
             setOpenAlert(true);

@@ -1,10 +1,10 @@
 import { Divider } from '@mui/material';
 import { useRouter } from 'next/router';
 import React from 'react';
-import CarCard from '../components/CarCard';
-import AddressFooter from '../components/footer/AddressFooter';
-import { getCarsList } from '../services/data.service';
-import styles from '../styles/SearchResult.module.scss';
+import CarCard from 'components/CarCard';
+import AddressFooter from 'components/footer/AddressFooter';
+import { getCarsList } from 'services/data.service';
+import styles from 'styles/SearchResult.module.scss';
 
 const SearchResult = ({ token, cars }: any) => {
     const router = useRouter();

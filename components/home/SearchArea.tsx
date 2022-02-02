@@ -1,7 +1,6 @@
 import { useState } from 'react';
-import styles from '../../styles/SearchArea.module.scss';
+import styles from 'styles/SearchArea.module.scss';
 import { Button, FormControl, InputLabel, MenuItem, Select } from '@mui/material';
-import { testingAPI } from '../../services/data.service';
 import { useRouter } from 'next/router';
 
 

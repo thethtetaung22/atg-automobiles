@@ -1,5 +1,5 @@
-import CreateCarComp from '../../../components/CreateCar';
-import { getCarByID } from '../../../services/data.service';
+import CreateCarComp from 'components/CreateCar';
+import { getCarByID } from 'services/data.service';
 
 const EditCar = ({ token, carDetails }: any) => {
 

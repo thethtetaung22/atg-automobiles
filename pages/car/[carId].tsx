@@ -1,7 +1,6 @@
 import React from 'react'; 
-import { CarDetails , DetailsNotFound } from "../../components/CarDetails";
-import useWindowSize from '../../hooks/useWindowSize';
-import { getCarByID } from "../../services/data.service";
+import { CarDetails , DetailsNotFound } from "components/CarDetails";
+import { getCarByID } from "services/data.service";
 
 const CarPage = ({ carDetails }: any) => {
     

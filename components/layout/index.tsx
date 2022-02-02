@@ -1,8 +1,7 @@
-import NavBar from "../nav";
-import styles from '../../styles/Layout.module.scss';
-import SideNav from "../sidenav";
-import { useEffect, useState } from "react";
-import Footer from "../footer";
+import NavBar from "components/nav";
+import styles from 'styles/Layout.module.scss';
+import SideNav from "components/sidenav";
+import { useState } from "react";
 import { useRouter } from "next/router";
 
 const Layout = ({ children, token }: any) => {

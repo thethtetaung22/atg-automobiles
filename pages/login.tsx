@@ -1,8 +1,7 @@
 import { Button, TextField, Backdrop, CircularProgress } from "@mui/material";
 import { useRouter } from "next/router";
 import { useState } from "react";
-import { login } from "../services/data.service";
-import styles from '../styles/Login.module.scss';
+import styles from 'styles/Login.module.scss';
 
 const Login = () => {
     const router = useRouter();
@@ -28,7 +27,6 @@ const Login = () => {
                 });
             }
         });
-        
     }
 
     return (

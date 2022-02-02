@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react';
-import styles from '../../styles/LandingNav.module.scss';
+import styles from 'styles/LandingNav.module.scss';
 import MenuIcon from '@mui/icons-material/Menu';
 import { useRouter } from 'next/router';
 

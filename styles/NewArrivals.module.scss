@@ -4,6 +4,7 @@
     flex-direction: column;
     min-height: 500px;
     background: white;
+
     padding: 20px 40px;
     justify-content: center;
     align-items: center;
@@ -24,13 +25,29 @@
 
     .carsContainer {
         display: flex;
-        flex-wrap: wrap;
         justify-content: center;
         align-items: center;
         padding-top: 20px;
+        padding: 20px;
 
         .cardContainer {
-            padding: 10px 20px;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+            border-radius: 5px;
+            cursor: pointer;
+            box-shadow: 0px 10px 10px -5px rgba(0, 0, 0, 0.05);
+            // will-change: width, height;
+
+            .item {
+                width: auto;
+                border-radius: 5px;
+                margin: 10px;
+                background-color: transparent;
+                background: transparent;
+                will-change: transform, opacity;
+              }
         }
     }
 

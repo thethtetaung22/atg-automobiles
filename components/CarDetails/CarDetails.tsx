@@ -3,10 +3,10 @@ import { Button, Divider } from '@mui/material';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
-import useWindowSize from '../../hooks/useWindowSize';
-import styles from '../../styles/Car.module.scss';
-import { shimmer, toBase64 } from '../common';
-import AddressFooter from '../footer/AddressFooter';
+import useWindowSize from 'hooks/useWindowSize';
+import styles from 'styles/Car.module.scss';
+import { shimmer, toBase64 } from 'components/common';
+import AddressFooter from 'components/footer/AddressFooter';
 import FullScreenImage from './FullScreenImage';
 
 const CarDetails = ({ carDetails }: any) => {

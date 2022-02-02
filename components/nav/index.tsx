@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import styles from '../../styles/Nav.module.scss';
+import styles from 'styles/Nav.module.scss';
 import MenuIcon from '@mui/icons-material/Menu';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
@@ -32,7 +32,7 @@ const NavBar = ({ toggle, isLoggedIn }: any) => {
                     </Link>
                 </div>
                 <div className={styles.link}>
-                    <Link href="/cars/1">
+                    <Link href="/showroom">
                         <a>Showroom</a>
                     </Link>
                 </div>

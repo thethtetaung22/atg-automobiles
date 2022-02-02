@@ -1,12 +1,11 @@
 import { MessageOutlined, Phone } from '@mui/icons-material';
 import { Divider } from '@mui/material';
 import React from 'react';
-import CarCard from '../components/CarCard';
-import AddressFooter from '../components/footer/AddressFooter';
-import NewArrivals from '../components/landing/NewArrivals';
-import Map from '../components/Map/Map';
-import { getCarsList } from '../services/data.service';
-import styles from '../styles/About.module.scss';
+import CarCard from 'components/CarCard';
+import AddressFooter from 'components/footer/AddressFooter';
+import Map from 'components/Map/Map';
+import { getCarsList } from 'services/data.service';
+import styles from 'styles/About.module.scss';
 
   const About = ({ cars }: any) => {
     

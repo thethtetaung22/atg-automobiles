@@ -2,12 +2,11 @@ import React, { useRef, useState } from 'react';
 import { 
     ArrowBackIos,
     ArrowForwardIos,
-    Close } from '@mui/icons-material';
+    Close 
+} from '@mui/icons-material';
 import { IconButton } from '@mui/material';
-import Image from 'next/image';
-import styles from '../../styles/FullScreenImage.module.scss';
-import { shimmer, toBase64 } from '../common';
-import { useDrag, useGesture } from 'react-use-gesture';
+import styles from 'styles/FullScreenImage.module.scss';
+import { useGesture } from 'react-use-gesture';
 import { animated, to, useSpring } from 'react-spring';
 
 const FullScreenImage = ({ images, toggle, index }: any) => {

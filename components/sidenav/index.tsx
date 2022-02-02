@@ -1,6 +1,6 @@
 import { Close } from "@mui/icons-material";
 import { useRouter } from "next/router";
-import styles from '../../styles/SideNav.module.scss';
+import styles from 'styles/SideNav.module.scss';
 
 const SideNav = ({ isOpen, toggle, isLoggedIn }: any) => {
     const router = useRouter();
@@ -33,7 +33,7 @@ const SideNav = ({ isOpen, toggle, isLoggedIn }: any) => {
                     <div onClick={() => handleRouter('/')} style={{color: isCurrentRoute('/') ? '#fc3636':''}}>
                         <a>Home</a>
                     </div>
-                    <div onClick={() => handleRouter('/cars/1')} style={{color: router.route !== '/' && router.route !== '/about' ? '#fc3636':''}}>
+                    <div onClick={() => handleRouter('/showroom')} style={{color: router.route !== '/' && router.route !== '/about' ? '#fc3636':''}}>
                         <a>Showroom</a>
                     </div>
                     <div onClick={() => handleRouter('/about')} style={{color: isCurrentRoute('/about') ? '#fc3636':''}}>

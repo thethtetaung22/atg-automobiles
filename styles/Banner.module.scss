@@ -7,6 +7,7 @@
     background: rgb(121,9,14);
     background: linear-gradient(90deg, rgba(41, 14, 14, 0.452) 0%, rgb(143, 14, 14) 100%, rgb(224, 39, 39) 100%);
     position: relative;
+    z-index: 1;
 
     .leftContainer {
         display: flex;
@@ -15,7 +16,7 @@
         justify-content: center;
         align-items: center;
         color: white;
-        margin-top: -40px;
+        // margin-top: -40px;
 
         @media screen and (max-width: 900px) {
             width: 100%;
@@ -32,10 +33,16 @@
         }
 
         .text {
-            font-weight: bolder;
-            font-size: 50px;
-            letter-spacing: 6px;
-            font-family: 'Arial Narrow Bold';
+            color: white;
+            font-size: 3em;
+            font-weight: 700;
+            min-height: 100px;
+            text-transform: uppercase;
+            will-change: transform, opacity, height;
+            white-space: nowrap;
+            cursor: pointer;
+            line-height:70px;
+            z-index: 10;
 
             @media screen and (max-width: 1000px) {
                 font-size: 40px;

@@ -17,3 +17,5 @@ export const toBase64 = (str: any) =>
     typeof window === 'undefined'
         ? Buffer.from(str).toString('base64')
         : window.btoa(str);
+
+export const host = 'http://3.1.141.66:8500';

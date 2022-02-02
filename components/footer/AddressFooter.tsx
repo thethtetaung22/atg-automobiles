@@ -1,9 +1,8 @@
-import { Facebook, FacebookRounded, Instagram, Twitter, YouTube } from '@mui/icons-material';
+import { Facebook, YouTube } from '@mui/icons-material';
 import { IconButton } from '@mui/material';
-import Link from 'next/link';
 import React from 'react';
 import Footer from '.';
-import styles from '../../styles/AddressFooter.module.scss';
+import styles from 'styles/AddressFooter.module.scss';
 
 const AddressFooter = () => {
     return (

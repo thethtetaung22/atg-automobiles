@@ -1,6 +1,6 @@
-import '../styles/globals.scss'
+import 'styles/globals.scss'
 import type { AppProps } from 'next/app'
-import Layout from '../components/layout'
+import Layout from 'components/layout'
 import Head from 'next/head'
 import { useEffect, useState } from 'react'
 

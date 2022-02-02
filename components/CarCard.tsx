@@ -1,13 +1,24 @@
 import { ArrowForwardIos, MoreHoriz } from '@mui/icons-material';
-import { Button, Card, Dialog, DialogActions, DialogContent, DialogTitle, Divider, IconButton, Menu, MenuItem } from '@mui/material';
+import { 
+    Button, 
+    Card, 
+    Dialog, 
+    DialogActions, 
+    DialogContent, 
+    DialogTitle, 
+    Divider, 
+    IconButton, 
+    Menu, 
+    MenuItem 
+} from '@mui/material';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 import React, { useState } from 'react';
-import { deleteCarApi, updateCarApi } from '../services/data.service';
-import styles from '../styles/CarCard.module.scss';
+import { deleteCarApi, updateCarApi } from 'services/data.service';
+import styles from 'styles/CarCard.module.scss';
 import { shimmer, toBase64 } from './common';
 
-const CarCard = ({ token, car }: any) => {
+const CarCard = ({ token, car, bgTransparent }: any) => {
     const router = useRouter()
     const [anchorEl, setAnchorEl] = useState(null);
     const open = Boolean(anchorEl);
@@ -89,7 +100,7 @@ const CarCard = ({ token, car }: any) => {
 
 
     return (
-        <Card className={styles.carContainer} key={car.id}>
+        <Card className={styles.carContainer} key={car.id} style={{background: bgTransparent ? 'transparent': ''}}>
             {
                 renderCreateSuccessDialog()
             }

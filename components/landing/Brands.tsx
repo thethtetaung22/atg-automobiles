@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import React from 'react';
-import styles from '../../styles/Brands.module.scss';
+import styles from 'styles/Brands.module.scss';
 
 const Brands = () => {
     return <div className={styles.container}>
