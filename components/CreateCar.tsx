@@ -102,19 +102,19 @@ const CreateCar = ({ token, carDetails }: any) => {
             if (token) {
                 const query = {
                     name: acceptedFiles[i].name,
-                    mimeType: acceptedFiles[i].type
+                    mimeType: acceptedFiles[i].type,
+                    token
                 }
 
-                const result = await getPresignedURL(token, query);
-
-                if (result?.status === 200 && result.result?.signedRequest) {
-                    const uploadResult = await uploadToS3(result.result.signedRequest, acceptedFiles[i], query.mimeType);
+                const { status, data } = await axios.post('/api/getPresignedURL', query);
+                if (status === 200 && data?.presignedUrl) {
+                    const uploadResult = await uploadToS3(data?.presignedUrl, acceptedFiles[i], query.mimeType);
                     if (uploadResult?.status === 200) {
                         if (isPreview) {
-                            setPreviewUrl(result.result.url);
+                            setPreviewUrl(data?.url);
                         } else {
                             const images = moreImages;
-                            images.push(result.result.url)
+                            images.push(data?.url)
                             setMoreImages(images);
                         }
                     }
