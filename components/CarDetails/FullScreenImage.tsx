@@ -26,7 +26,6 @@ const FullScreenImage = ({ images, toggle, index }: any) => {
         if (previewIndex < images.length - 1) {
             setPreviewIndex(previewIndex + 1);
         }
-        console.log(previewIndex)
     }
 
     const bindGesture = useGesture({

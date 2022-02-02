@@ -11,10 +11,10 @@ import {
     Menu, 
     MenuItem 
 } from '@mui/material';
+import axios from 'axios';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 import React, { useState } from 'react';
-import { deleteCarApi, updateCarApi } from 'services/data.service';
 import styles from 'styles/CarCard.module.scss';
 import { shimmer, toBase64 } from './common';
 
@@ -63,13 +63,22 @@ const CarCard = ({ token, car, bgTransparent }: any) => {
     const handleMenuClick = async (action: string) => {
         if (menuActiveCar) {
             if (action === 'delete') {
-                const result = await deleteCarApi(token, menuActiveCar.id);
-                if (result?.status === 200) {
+                const result = await axios.delete(`/api/cars/${menuActiveCar.id}`, {
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
+                if (result?.status === 204) {
                     setSuccessMessage('Your car is deleted successfully!');
                     setOpenSuccessDialog(true);
                 }
             } else if (action === 'sold') {
-                const result = await updateCarApi(token, menuActiveCar.id, { is_sold: !menuActiveCar.is_sold });
+                const result = await axios.put(`/api/cars/${menuActiveCar.id}`, { is_sold: !menuActiveCar.is_sold }, {
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
                 if (result?.status === 200) {
                     setSuccessMessage('Your car is sold successfully!');
                     setOpenSuccessDialog(true);

@@ -32,7 +32,7 @@ const Cars = ({ token, dropDownData }: any) => {
             <SearchArea dropDownData={dropDownData}/>
             <div className={styles.carListContainer}>
                 {
-                    data && <CarList token={token} cars={data?.result?.cars}/>
+                    data?.result?.cars && <CarList token={token} cars={data?.result?.cars}/>
                 }
                 <div className={styles.paginator}>
                     <Button variant="contained" className={styles.button} startIcon={<ArrowBackIos />} onClick={() => handlePaginator('previous')} disabled={page === 0} style={{backgroundColor: page === 0 ? 'gray' : ''}}>

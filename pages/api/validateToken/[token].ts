@@ -10,7 +10,6 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
         }
     }).then(response => response.json())
     .then(data => {
-      // console.log('data:', data);
       return data;
     })
     .catch(err => {

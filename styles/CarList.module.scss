@@ -24,7 +24,6 @@
         display: flex;
         justify-content: center;
         align-items: center;
-        padding: 20px;
         
         .cardContainer {
             padding: 20px 40px;
@@ -88,6 +87,7 @@
 
             .cardContainer {
                 grid-template-columns: auto auto;
+                padding: 20px;
             }
         }
     }
@@ -104,6 +104,7 @@
 
             .cardContainer {
                 grid-template-columns: auto;
+                padding: 20px 0px; 
             }
         }
 

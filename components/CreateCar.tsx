@@ -33,6 +33,7 @@ import {
 import { createNewCarApi, getPresignedURL, updateCarApi, uploadToS3 } from 'services/data.service';
 import styles from 'styles/CreateCar.module.scss';
 import { Box } from '@mui/system';
+import axios from 'axios';
 
 const CreateCar = ({ token, carDetails }: any) => {
     const router = useRouter();
@@ -83,7 +84,6 @@ const CreateCar = ({ token, carDetails }: any) => {
             fetch(`/api/validateToken/${token}`)
                 .then(res => res.json())
                 .then(data => {
-                    console.log(data);
                     isValid = data?.isValid;
                 });
         }
@@ -178,7 +178,7 @@ const CreateCar = ({ token, carDetails }: any) => {
         <DialogActions>
             <Button onClick={() => {
                 setOpenSuccessDialog(false);
-                router.reload();
+                router.replace('/showroom');
             }} color="error">
                 OK
             </Button>
@@ -212,10 +212,10 @@ const CreateCar = ({ token, carDetails }: any) => {
             isValid = false;
             setCustomKeyType('');
             errorMessage = 'Custom Key Type is required.';
-        } else if (engineCapacity === 0) {
+        } else if (!engineCapacity || engineCapacity === 0) {
             isValid = false;
             errorMessage = 'Engine Capacity is required.';
-        } else if (enginePower === 0) {
+        } else if (!enginePower || enginePower === 0) {
             isValid = false;
             errorMessage = 'Engine Power is required.';
         }
@@ -237,11 +237,11 @@ const CreateCar = ({ token, carDetails }: any) => {
                 brand,
                 model: new Date(model)?.getFullYear(),
                 type: type.toLowerCase() === 'other' ? customType : type,
-                engine_power: enginePower,
                 steering_position: steeringPosition,
                 transmission: transmission,
                 key: keyType,
                 engine_capacity: engineCapacity,
+                engine_power: enginePower,
                 fuel_type: fuelType,
                 color: color.toLowerCase() === 'other' ? customColor : color,
                 mileage: mileage,
@@ -257,9 +257,19 @@ const CreateCar = ({ token, carDetails }: any) => {
                     setShowLoading(true);
                     let result: any;
                     if (carDetails) {
-                        result = await updateCarApi(token, carDetails.id, reqBody);
+                        result = await axios.put(`/api/cars/${carDetails.id}`, reqBody, {
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'Authorization': `Bearer ${token}`
+                            }
+                        });
                     } else {
-                        result = await createNewCarApi(token, reqBody);
+                        result = await axios.post('/api/cars', reqBody, {
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'Authorization': `Bearer ${token}`
+                            }
+                        });
                     }
                     if (result.status === 201 || result.status === 200) {
                         setShowLoading(false);
@@ -568,12 +578,7 @@ const CreateCar = ({ token, carDetails }: any) => {
                     type={'number'}
                     value={engineCapacity}
                     onChange={(e) => {
-                        const capacity = parseInt(e.target.value);
-                        if (capacity >= 0) {
-                            setEngineCapacity(capacity);
-                        } else {
-                            setEngineCapacity(0);
-                        }
+                        setEngineCapacity(parseInt(e.target.value));
                     }}/>
 
                 <TextField 
@@ -585,11 +590,7 @@ const CreateCar = ({ token, carDetails }: any) => {
                     type={'number'}
                     value={enginePower}
                     onChange={(e) => {
-                        if (parseInt(e.target.value) >= 0) {
-                            setEnginerPower(parseInt(e.target.value));
-                        } else {
-                            setEnginerPower(0);
-                        }
+                        setEnginerPower(parseInt(e.target.value));
                     }}/>
 
                 <TextField 
@@ -601,11 +602,7 @@ const CreateCar = ({ token, carDetails }: any) => {
                     type={'number'}
                     value={mileage}
                     onChange={(e) => {
-                        if (parseInt(e.target.value) >= 0) {
-                            setMileage(parseInt(e.target.value));
-                        } else {
-                            setMileage(0);
-                        }
+                        setMileage(parseInt(e.target.value));
                     }}/>
 
                 <TextField 
