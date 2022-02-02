@@ -11,7 +11,7 @@ const Brands = () => {
                     alt='toyota'
                     src={'/toyota-logo.png'}
                     width={100}
-                    height={100}
+                    height={80}
                     layout='fixed'
                 />
                 <span className={styles.name}>Toyota</span>
@@ -22,7 +22,7 @@ const Brands = () => {
                     alt='honda'
                     src={'/honda-logo.png'}
                     width={100}
-                    height={100}
+                    height={80}
                     layout='fixed'
                 />
                 <span className={styles.name}>Honda</span>
@@ -33,7 +33,7 @@ const Brands = () => {
                     alt='lexus'
                     src={'/lexus-logo.png'}
                     width={100}
-                    height={100}
+                    height={80}
                     layout='fixed'
                 />
                 <span className={styles.name}>Lexus</span>
@@ -44,13 +44,13 @@ const Brands = () => {
                     alt='hyundai'
                     src={'/hyundai-logo.png'}
                     width={100}
-                    height={100}
+                    height={80}
                     layout='fixed'
                 />
                 <span className={styles.name}>Hyundai</span>
             </div>
 
-            <div className={styles.logo}>
+            {/* <div className={styles.logo}>
                 <Image
                     alt='audi'
                     src={'/audi-logo.png'}
@@ -59,14 +59,14 @@ const Brands = () => {
                     layout='fixed'
                 />
                 <span className={styles.name}>Audi</span>
-            </div>
+            </div> */}
 
             <div className={styles.logo}>
                 <Image
                     alt='mercedes'
                     src={'/mercedes-logo.png'}
-                    width={130}
-                    height={100}
+                    width={100}
+                    height={80}
                     layout='fixed'
                 />
                 <span className={styles.name}>Mercedes</span>
@@ -76,8 +76,8 @@ const Brands = () => {
                 <Image
                     alt='mazda'
                     src={'/mazda-logo.png'}
-                    width={130}
-                    height={100}
+                    width={100}
+                    height={80}
                     layout='fixed'
                 />
                 <span className={styles.name}>Mazda</span>
