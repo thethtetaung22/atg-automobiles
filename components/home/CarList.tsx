@@ -1,21 +1,10 @@
-import { ArrowBackIos, ArrowForwardIos } from "@mui/icons-material";
-import { Button, Divider } from "@mui/material";
-import { useRouter } from "next/router";
+import { Divider } from "@mui/material";
 import styles from 'styles/CarList.module.scss';
 import CarCard from "components/CarCard";
 import { useState } from "react";
 import { animated, config, useChain, useSpring, useSpringRef, useTransition } from "react-spring";
-import useSWRInfinite from "swr/infinite";
-import useSWR from "swr";
 
-
-const CarList = ({ token }: any) => {
-    const [page, setPage] = useState(0);
-    const fetcher = (url: any) => fetch(url).then((res) => res.json());
-    const { data , error } = useSWR(
-            `/api/cars?take=8&skip=${page * 8}`, 
-        fetcher
-    );
+const CarList = ({ token, cars }: any) => {
     const [open, set] = useState(true);
     const springApi = useSpringRef()
     const { size, ...rest } = useSpring({
@@ -29,9 +18,9 @@ const CarList = ({ token }: any) => {
     })
 
     const transApi = useSpringRef()
-    const transition = useTransition(open ? data?.result?.result : [], {
+    const transition = useTransition(open ? cars : [], {
         ref: transApi,
-        trail: 400 / data?.result.result?.length,
+        trail: 400 / cars.length,
         from: { opacity: 0, scale: 0 },
         enter: { opacity: 1, scale: 1 },
         leave: { opacity: 0, scale: 0 },
@@ -43,17 +32,7 @@ const CarList = ({ token }: any) => {
         open ? 0.1 : 0.6,
     ]);
     
-    const handlePaginator = async (action: string) => {
-        if (action === 'next') {
-            setPage(page + 1);
-        } else {
-            setPage(page - 1);
-        }
-    };
 
-    if (!data) {
-        return <>Loading...</>
-    }
     return (
         <div className={styles.container}>
 
@@ -77,15 +56,6 @@ const CarList = ({ token }: any) => {
                         ))
                     }
                 </animated.div>
-            </div>
-
-            <div className={styles.paginator}>
-                <Button variant="contained" className={styles.button} startIcon={<ArrowBackIos />} onClick={() => handlePaginator('previous')} disabled={page === 0} style={{backgroundColor: page === 0 ? 'gray' : ''}}>
-                    Previous
-                </Button>
-                <Button variant="contained" className={styles.button} endIcon={<ArrowForwardIos />} onClick={() => handlePaginator('next')} disabled={!data?.result?.hasMore} style={{backgroundColor: data?.result?.hasMore ? '' : 'gray'}}>
-                    Next
-                </Button>
             </div>
         </div>
     );

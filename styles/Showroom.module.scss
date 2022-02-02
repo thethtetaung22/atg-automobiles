@@ -1,0 +1,32 @@
+@import '_colors';
+.container {
+    display: flex;
+    flex: 1 1 auto;
+    flex-direction: column;
+    min-width: 250px;
+    overflow: auto;
+    background-color: #ececec;
+
+    .carListContainer {
+        padding: 20px 0px;
+
+        .paginator {
+            display: flex;
+            flex: 1;
+            align-items: center;
+            justify-content: center;
+
+            .button {
+                margin: 10px 20px;
+                padding: 5px 20px;
+                background-color: $button-background;
+                border-radius: 40px;
+                color: white;
+            }
+        }
+    }
+
+    .footerContainer {
+        height: 50px;
+    }
+}

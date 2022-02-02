@@ -26,7 +26,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     res.status(200).json({
         success: true, 
         result: {
-            result: cars,
+            cars,
             hasMore
         }
     });
