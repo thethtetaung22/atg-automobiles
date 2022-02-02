@@ -40,22 +40,36 @@ const CarList = ({ token, cars }: any) => {
 
             <Divider variant='middle' className={styles.divider} />
             <div className={styles.carListContainer}>
-                <animated.div
-                    style={{ ...rest, width: size, height: size, background: 'transparent' }}
-                    className={styles.cardContainer}>
-                    {
-                        transition((style, item) => (
-                            <animated.div
-                                className={styles.item}
-                                style={{ ...style, background: item.css }}
-                            >
-                                {
-                                    <CarCard car={item.car} token={token} bgTransparent={true}/>
-                                }
-                            </animated.div>
-                        ))
-                    }
-                </animated.div>
+                {
+                    cars?.length > 0 ?
+                        <animated.div
+                            style={{ ...rest, width: size, height: size, background: 'transparent' }}
+                            className={styles.cardContainer}>
+                            {
+                                transition((style, item) => (
+                                    <animated.div
+                                        className={styles.item}
+                                        style={{ ...style, background: item.css }}
+                                    >
+                                        {
+                                            <CarCard car={item.car} token={token} bgTransparent={true}/>
+                                        }
+                                    </animated.div>
+                                ))
+                            }
+                        </animated.div> :
+                        <div style={{
+                            display: 'flex',
+                            height: '400px',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            fontSize: '25px',
+                            color: 'gray',
+                            fontFamily: 'revert'
+                        }}>
+                            <span>No Data!</span>
+                        </div>
+                }
             </div>
         </div>
     );

@@ -11,29 +11,7 @@ const NewArrivals = ({ token, cars }: any) => {
   const [open, set] = useState(true);
   const springApi = useSpringRef();
   const transApi = useSpringRef();
-  let data = [
-    {
-      id: 0,
-      name: 'Rare Wind',
-      description: '#a8edea → #fed6e3',
-      css: 'linear-gradient(135deg, #a8edea 0%, #fed6e3 100%)',
-      height: 200
-    },
-    {
-      id: 1,
-      name: 'Saint Petersburg',
-      description: '#f5f7fa → #c3cfe2',
-      css: 'linear-gradient(135deg, #c1dfc4 0%, #deecdd 100%)',
-      height: 400
-    },
-    {
-      id: 2,
-      name: 'Deep Blue',
-      description: '#e0c3fc → #8ec5fc',
-      css: 'linear-gradient(135deg, #fff1eb 0%, #ace0f9 100%)',
-      height: 400
-    }
-  ];
+  
   const { size, ...rest } = useSpring({
     ref: springApi,
     config: config.stiff,
@@ -43,9 +21,9 @@ const NewArrivals = ({ token, cars }: any) => {
       background: open ? 'white' : 'hotpink',
     },
   });
-  const transition = useTransition(open ? data : [], {
+  const transition = useTransition(open ? cars : [], {
     ref: transApi,
-    trail: 400 / data.length,
+    trail: 400 / cars?.length,
     from: { opacity: 0, scale: 0 },
     enter: { opacity: 1, scale: 1 },
     leave: { opacity: 0, scale: 0 },
@@ -63,29 +41,30 @@ const NewArrivals = ({ token, cars }: any) => {
     <div className={styles.carsContainer}>
       {
         cars?.length > 0 ?
-        <animated.div
-          style={{ ...rest, width: size, height: size }}
-          className={styles.cardContainer}>
-          {
-            transition((style, item) => (
-              <animated.div
-                className={styles.item}
-                style={{ ...style, background: item.css }}
-              >
-                <CarCard car={cars[item.id]} token={token} bgTransparent={true}/>
-              </animated.div>
-            ))
-          }
-        </animated.div> :
-        <div style={{
-          color:'gray',
-          fontSize: '30px',
-          height: '200px',
-          textAlign:'center',
-          verticalAlign: 'center'
-        }}>
-          No Data!
-        </div>
+          <animated.div
+            style={{ ...rest, width: size, height: size }}
+            className={styles.cardContainer}>
+            {
+              transition((style, item) => (
+                <animated.div
+                  className={styles.item}
+                  style={{ ...style, background: item.css }}
+                >
+                  <CarCard car={item.car} token={token} bgTransparent={true}/>
+                </animated.div>
+              ))
+            }
+          </animated.div> :
+          <div style={{
+            display: 'flex',
+            color:'gray',
+            fontSize: '30px',
+            height: '200px',
+            alignItems:'center',
+            justifyContent: 'center'
+          }}>
+            <span>No Data!</span>
+          </div>
       }
     </div>
     {

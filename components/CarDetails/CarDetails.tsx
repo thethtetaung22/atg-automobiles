@@ -161,11 +161,6 @@ const CarDetails = ({ carDetails }: any) => {
                         </div>
                         <Divider variant='middle' className={styles.detailsDivider} />
                         <div className={styles.detail}>
-                            <span>Engine Capacity:</span>
-                            <span>{carDetails.engine_capacity} cc</span>
-                        </div>
-                        <Divider variant='middle' className={styles.detailsDivider} />
-                        <div className={styles.detail}>
                             <span>Mileage:</span>
                             <span>{carDetails.mileage} km</span>
                         </div>

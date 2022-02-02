@@ -67,6 +67,7 @@ const Banner = () => {
                         layout='responsive'
                         width={700}
                         height={400}
+                        priority
                         alt='car-red'/>
                 </div>
             </div>

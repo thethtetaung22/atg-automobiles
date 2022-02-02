@@ -5,9 +5,9 @@ import Brands from 'components/landing/Brands';
 import NewArrivals from 'components/landing/NewArrivals';
 import { getCarsList } from 'services/data.service';
 import styles from 'styles/Landing.module.scss';
+import { colorsData } from 'data/constants';
 
 const Landing: NextPage = ({ token, cars }: any) => {
-  console.log(cars)
   return (
     <div className={styles.container}>
         <Banner />
@@ -24,11 +24,16 @@ export const getServerSideProps = async () => {
   let cars: any = null;
   const response = await getCarsList('take=4&skip=0');
   if (response?.status === 200 && response?.data?.result) {
-    cars = response.data.result;
+    cars = response?.data?.result?.map((car: any, i: number) => {
+      return {
+        ...colorsData[i],
+        car
+      }
+    });
   }
   return {
       props: {
-          cars
+        cars
       }
   }
 }

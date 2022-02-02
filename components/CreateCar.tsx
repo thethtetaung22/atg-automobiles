@@ -54,7 +54,6 @@ const CreateCar = ({ token, carDetails }: any) => {
     const [previewUrl, setPreviewUrl] = useState<string>();
     const [moreImages, setMoreImages] = useState<string[]>([]);
     const [enginePower, setEnginerPower] = useState<number>(0);
-    const [engineCapacity, setEngineCapacity] = useState<number>(0);
     const [mileage, setMileage] = useState<number>(0);
     const [description, setDescription] = useState<string>();
 
@@ -212,9 +211,6 @@ const CreateCar = ({ token, carDetails }: any) => {
             isValid = false;
             setCustomKeyType('');
             errorMessage = 'Custom Key Type is required.';
-        } else if (!engineCapacity || engineCapacity === 0) {
-            isValid = false;
-            errorMessage = 'Engine Capacity is required.';
         } else if (!enginePower || enginePower === 0) {
             isValid = false;
             errorMessage = 'Engine Power is required.';
@@ -240,7 +236,7 @@ const CreateCar = ({ token, carDetails }: any) => {
                 steering_position: steeringPosition,
                 transmission: transmission,
                 key: keyType,
-                engine_capacity: engineCapacity,
+                engine_capacity: 0,
                 engine_power: enginePower,
                 fuel_type: fuelType,
                 color: color.toLowerCase() === 'other' ? customColor : color,
@@ -291,7 +287,6 @@ const CreateCar = ({ token, carDetails }: any) => {
             setBrand(carDetails.brand);
             setColor(carDetails.color);
             setModel(new Date().setFullYear(carDetails.model));
-            setEngineCapacity(carDetails.engine_capacity);
             setEnginerPower(carDetails.engine_power);
             setFuelType(carDetails.fuel_type);
             setMileage(carDetails.mileage);
@@ -568,18 +563,6 @@ const CreateCar = ({ token, carDetails }: any) => {
                         value={customColor} 
                         onChange={(e) => setCustomColor(e.target.value)} />
                 }
-
-                <TextField 
-                    className={styles.textInput} 
-                    id="engineCapacity" 
-                    variant='outlined' 
-                    label='Engine Capacity(cc)' 
-                    placeholder='2354'
-                    type={'number'}
-                    value={engineCapacity}
-                    onChange={(e) => {
-                        setEngineCapacity(parseInt(e.target.value));
-                    }}/>
 
                 <TextField 
                     id="enginePower" 
