@@ -12,7 +12,7 @@ const AddressFooter = () => {
                     <h2>ATG AUTOMOBILES</h2>
                     <span>61(A), Between 116 x 117 st,</span>
                     <span>Mandalay, Myanmar.</span>
-                    <span>contact@atgautomobiles.com</span>
+                    <span>athetaung@gmail.com</span>
                     <span><a href="tel:+959777555881">09 777 555 881</a></span>
                 </div>
                     
