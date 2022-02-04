@@ -383,7 +383,7 @@ const CreateCar = ({ token, carDetails }: any) => {
                     {({ getRootProps, getInputProps }) => (
                         <section>
                             <div {...getRootProps()} className={styles.imagesUploadArea}>
-                                <input {...getInputProps()} multiple={false} accept='image/*, video/*' />
+                                <input {...getInputProps()} accept='image/*, video/*' />
                                 <div className={styles.body}>
                                     <AddCircleRounded style={{ color: '#C60021' }} />
                                 </div>
