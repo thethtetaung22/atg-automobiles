@@ -157,7 +157,7 @@ const CarDetails = ({ carDetails }: any) => {
                         <Divider variant='middle' className={styles.detailsDivider} />
                         <div className={styles.detail}>
                             <span>Engine Power:</span>
-                            <span>{carDetails.engine_power} kW</span>
+                            <span>{carDetails.engine_power} cc</span>
                         </div>
                         <Divider variant='middle' className={styles.detailsDivider} />
                         <div className={styles.detail}>
