@@ -14,7 +14,7 @@ import styles from 'styles/About.module.scss';
             <div className={styles.headerContainer}>
                 <div className={styles.textBackground}>
                     <div className={styles.header}>About Company</div>
-                    <p className={styles.body}>AGT automobiles was founded in 2017 and is being operated by a group of young professionals in car industry with a simple idea. How do we serve our customers smarter, faster and easier? We hope to lead the automotive and mobility solutions market, by offering a better experience, democratizing information, and developing the automobile sector.
+                    <p className={styles.body}>ATG Automobiles was founded in 2017 and is being operated by a group of young professionals in car industry with a simple idea. How do we serve our customers smarter, faster and easier? We hope to lead the automotive and mobility solutions market, by offering a better experience, democratizing information, and developing the automobile sector.
 The global auto industry is highly competitive, and it is dominated by companies in Europe, Japan, the United States, and South Korea. You can check and buy the latest and greatest cars from more than 60 major automotive brands across the globe. Every automaker from Mazda to Chevy, Suzuki, and even exotic brands like McLaren and Lamborghini. We are here to serve the finest service in Myanmar.</p>
                     <div style={{display: 'flex'}}>
                         <div className={styles.button}>
